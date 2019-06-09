@@ -1,12 +1,21 @@
 import React from 'react';
 
 import targetWord from '../middlewares/picker';
+import mysteryWord from '../middlewares/makeMystery';
 import PlaceHolder from './misc/PlaceHolder';
+import Key from './misc/Key';
 
 export default function Game() {
-  const renderPlaceholders = () => targetWord.split('').map(() => <PlaceHolder key={Math.random()} />);
+  const renderPlaceholders = () => targetWord.map(() => <PlaceHolder key={Math.random()} />);
 
-  return <div className="placeholder container">{renderPlaceholders()}</div>;
+  const renderKeys = () => mysteryWord.map(letter => <Key key={Math.random()}>{letter}</Key>);
+
+  return (
+    <div className="container">
+      <div className="placeholderContainer row container">{renderPlaceholders()}</div>
+      <div className="keysContainer row container">{renderKeys()}</div>
+    </div>
+  );
 }
 
 /*
@@ -17,5 +26,7 @@ TODO:1 an separate array and a picker component
 TODO:2 add word counter to picker component
   -needs to thinking about space between two words
 3. CHALLENGE: system should throw a number of key words that contain correct words
+TODO:3 make a key button and keys container and throw target word words as key
+TODO:4 mix this words with some other words
   -the number of words that thrown should depend on the answer words count
 */

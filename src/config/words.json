@@ -1,3 +1,25 @@
 {
-  "levelOne": ["Hello", "World", "Cat"]
+  "levelOne": ["HELLO", "WORLD", "CAT"],
+  "alphabet": [
+    "A",
+    "Z",
+    "B",
+    "Y",
+    "C",
+    "X",
+    "D",
+    "W",
+    "E",
+    "P",
+    "F",
+    "O",
+    "G",
+    "N",
+    "H",
+    "M",
+    "I",
+    "L",
+    "K",
+    "J"
+  ]
 }
