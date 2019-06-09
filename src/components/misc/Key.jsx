@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-export default function Key({ children }) {
+import * as actions from '../../actions';
+
+function Key({ children, compareLetter }) {
   return (
-    <button className="btn btn-dark" type="button">
+    <button onClick={() => compareLetter(children)} className="btn btn-dark" type="button">
       {children}
     </button>
   );
@@ -12,3 +15,8 @@ export default function Key({ children }) {
 Key.propTypes = {
   children: PropTypes.string.isRequired,
 };
+
+export default connect(
+  null,
+  actions,
+)(Key);
