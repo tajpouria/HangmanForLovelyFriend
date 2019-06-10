@@ -1,40 +1,50 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import targetWord from '../middlewares/picker';
 import mysteryWord from '../middlewares/makeMystery';
 import PlaceHolder from './misc/PlaceHolder';
 import Key from './misc/Key';
 
-function Game({ compare }) {
-  const array = [];
+class Game extends Component {
+  constructor(props) {
+    super(props);
 
-  useEffect(() => {
-    debugger;
-    if (targetWord.includes(compare.letter)) {
-      array.push(compare.letter);
-    }
-  }, [compare]);
+    this.answer = [];
+  }
 
-  console.log(array);
+  componentWillMount() {
+    targetWord.map(() => this.answer.push('?'));
+  }
 
-  const [targetWordLetters, setTargetWordLetters] = useState(array);
+  componentWillReceiveProps({ letter }) {
+    targetWord.includes(letter)
+      && targetWord.map((targetLetter, i) => targetLetter === letter && (this.answer[i] = letter));
+  }
 
-  const renderPlaceholders = () => array.map(letter => <PlaceHolder key={Math.random()}>{letter}</PlaceHolder>);
+  render() {
+    const renderPlaceholders = () => this.answer.map(letter => <PlaceHolder key={Math.random()}>{letter}</PlaceHolder>);
 
-  const renderKeys = () => mysteryWord.map(letter => <Key key={Math.random()}>{letter}</Key>);
+    const renderKeys = () => mysteryWord.map(letter => <Key key={Math.random()}>{letter}</Key>);
 
-  return (
-    <div className="container">
-      <div className="placeholderContainer row container">{renderPlaceholders()}</div>
-      <div className="keysContainer row container">{renderKeys()}</div>
-    </div>
-  );
+    return (
+      <div className="container">
+        <div className="placeholderContainer row container">{renderPlaceholders()}</div>
+        <div className="keysContainer row container">{renderKeys()}</div>
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = ({ compare }) => ({ compare });
+const mapStateToProps = ({ compare: { letter } }) => ({ letter });
+
+Game.propTypes = {
+  letter: PropTypes.string.isRequired,
+};
 
 export default connect(mapStateToProps)(Game);
+
 /*
 PHASE ONE
 1. have an array of words system will pick once randomly

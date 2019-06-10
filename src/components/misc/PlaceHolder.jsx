@@ -8,3 +8,7 @@ export default function PlaceHolder({ children }) {
     </div>
   );
 }
+
+PlaceHolder.propTypes = {
+  children: PropTypes.string.isRequired,
+};
