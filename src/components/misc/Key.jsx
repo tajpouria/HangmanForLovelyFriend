@@ -14,6 +14,7 @@ function Key({ children, compareLetter }) {
 
 Key.propTypes = {
   children: PropTypes.string.isRequired,
+  compareLetter: PropTypes.func.isRequired,
 };
 
 export default connect(
