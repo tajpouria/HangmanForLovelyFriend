@@ -20,6 +20,10 @@ class Game extends Component {
   }
 
   componentWillReceiveProps({ letter }) {
+    for (let i = mysteryWord.length - 1; i >= 0; i--) {
+      mysteryWord[i] === letter && delete mysteryWord[i];
+    }
+
     this.answer.includes('?')
       && targetWord.includes(letter)
       && targetWord.map((targetLetter, i) => {
@@ -71,4 +75,6 @@ PHASE THREE
 1. winner and loser
 TODO:1.loser is who's have 6 incorrect guess winner is who's guess the targetWord in less than 6 false guess
 -picture will be more complete whenever user have incorrect guess
+PHASE FOUR
+1.remove the word when it's clicked
 */

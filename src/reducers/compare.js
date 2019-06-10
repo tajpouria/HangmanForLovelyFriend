@@ -7,7 +7,7 @@ export default function (state = INITIAL_STATE, { type, payload }) {
     case MATCH:
       return { letter: payload, hangman: state.hangman };
     case NOT_MATCH:
-      return { letter: false, hangman: state.hangman + 1 };
+      return { letter: payload, hangman: state.hangman + 1 };
     default:
       return state;
   }
