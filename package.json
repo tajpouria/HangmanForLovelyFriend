@@ -1,13 +1,12 @@
 {
-  "name": "flappy-bird_clone",
+  "name": "hangman",
   "version": "1.0.0",
-  "description": "clone classic flappy_bird",
   "main": "index.js",
   "author": "tajpouria",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --node development --open --hot",
-    "build": "webpack --mode production"
+    "start": "cd contextReadingList && webpack-dev-server --node development --open --hot",
+    "build": "cd contextReadingList && webpack --mode production"
   },
   "dependencies": {
     "matter-js": "^0.14.2",
