@@ -16,7 +16,7 @@ export default class ThemeContextProvider extends Component {
 
   render() {
     const { children } = this.props;
-    return <ThemeContext.Provider value={this.state}>{children}</ThemeContext.Provider>;
+    return <ThemeContext.Provider value={{ ...this.state }}>{children}</ThemeContext.Provider>;
   }
 }
 
