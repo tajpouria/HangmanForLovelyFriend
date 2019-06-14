@@ -63,3 +63,19 @@ export default function note() {
 // ## Modern React Course
 
 '!'.repeat(4)
+
+// defaultProps
+export default class note extends Component {
+
+  static defaultProps = {
+    from : 'Anonymous'
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.from}
+      </div>
+    )
+  }
+}
