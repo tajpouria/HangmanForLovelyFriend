@@ -1,0 +1,9 @@
+.win {
+  color: aliceblue;
+  background-color: chartreuse;
+}
+
+.lose {
+  color: aliceblue;
+  background-color: tomato;
+}

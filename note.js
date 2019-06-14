@@ -48,16 +48,18 @@ export default class note extends Component {
 
 // context.Consumer in both classBase and functional components
 
-
 export default function note() {
   return (
     <ThemContext.Consumer>
     {(context) => {
       console.log(context);
-      return(<div/>)
+      return <div/>;
     }
     }
     </ThemContext.Consumer>
     )
 }
 
+// ## Modern React Course
+
+'!'.repeat(4)
