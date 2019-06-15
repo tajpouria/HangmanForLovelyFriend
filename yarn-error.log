@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/share/yarn/bin/yarn.js add ccs-loader style-loader --dev
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js
 
 PATH: 
   /home/lenovo/.composer/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/lenovo/Android/Sdk/emulator:/home/lenovo/Android/Sdk/tools:/home/lenovo/Android/Sdk/tools/bin:/home/lenovo/Android/Sdk/platform-tools:/home/lenovo/.vimpkg/bin:/home/lenovo/.vimpkg/bin
@@ -8,23 +8,13 @@ Yarn version:
   1.16.0
 
 Node version: 
-  11.10.1
+  12.4.0
 
 Platform: 
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/ccs-loader: Not found
-      at Request.params.callback [as _callback] (/usr/share/yarn/lib/cli.js:66091:18)
-      at Request.self.callback (/usr/share/yarn/lib/cli.js:129590:22)
-      at Request.emit (events.js:197:13)
-      at Request.<anonymous> (/usr/share/yarn/lib/cli.js:130562:10)
-      at Request.emit (events.js:197:13)
-      at IncomingMessage.<anonymous> (/usr/share/yarn/lib/cli.js:130484:12)
-      at Object.onceWrapper (events.js:285:13)
-      at IncomingMessage.emit (events.js:202:15)
-      at endReadableNT (_stream_readable.js:1129:12)
-      at processTicksAndRejections (internal/process/next_tick.js:76:17)
+  Error: EACCES: permission denied, unlink '/home/lenovo/Desktop/react/fun/React-SandBox/node_modules/dom-walk/.npmignore'
 
 npm manifest: 
   {
@@ -34,11 +24,13 @@ npm manifest:
     "author": "tajpouria",
     "license": "MIT",
     "scripts": {
-      "start": "cd slot && webpack-dev-server --node development --open --hot",
+      "start": "cd pokedex && webpack-dev-server --node development --open --hot",
       "build": "cd contextReadingList && webpack --mode production"
     },
     "dependencies": {
+      "global": "^4.4.0",
       "matter-js": "^0.14.2",
+      "node": "^12.4.0",
       "prop-types": "^15.7.2",
       "react": "^16.8.6",
       "react-dom": "^16.8.6",
@@ -49,13 +41,14 @@ npm manifest:
     "devDependencies": {
       "@babel/core": "^7.4.5",
       "@babel/plugin-proposal-class-properties": "^7.4.4",
-      "@babel/preset-react": "^7.0.0",
       "@babel/preset-env": "^7.4.5",
+      "@babel/preset-react": "^7.0.0",
       "babel-core": "^7.0.0-beta.41",
       "babel-eslint": "^10.0.1",
       "babel-loader": "^7",
       "babel-preset-env": "^1.7.0",
       "babel-preset-react": "^6.24.1",
+      "css-loader": "^3.0.0",
       "eslint": "^5.16.0",
       "eslint-config-airbnb": "^17.1.0",
       "eslint-plugin-babel": "^5.3.0",
@@ -63,6 +56,7 @@ npm manifest:
       "eslint-plugin-jsx-a11y": "^6.2.1",
       "eslint-plugin-react": "^7.13.0",
       "html-webpack-plugin": "^3.2.0",
+      "style-loader": "^0.23.1",
       "webpack": "^4.33.0",
       "webpack-cli": "^3.3.2",
       "webpack-dev-server": "^3.5.1"
@@ -2021,7 +2015,7 @@ Lockfile:
       no-case "^2.2.0"
       upper-case "^1.1.1"
   
-  camelcase@^5.0.0:
+  camelcase@^5.0.0, camelcase@^5.3.1:
     version "5.3.1"
     resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-5.3.1.tgz#e3c9b31569e106811df242f715725a1f4c494320"
     integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
@@ -2374,6 +2368,24 @@ Lockfile:
       randombytes "^2.0.0"
       randomfill "^1.0.3"
   
+  css-loader@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-3.0.0.tgz#bdd48a4921eefedf1f0a55266585944d4e5efc63"
+    integrity sha512-WR6KZuCkFbnMhRrGPlkwAA7SSCtwqPwpyXJAPhotYkYsc0mKU9n/fu5wufy4jl2WhBw9Ia8gUQMIp/1w98DuPw==
+    dependencies:
+      camelcase "^5.3.1"
+      cssesc "^3.0.0"
+      icss-utils "^4.1.1"
+      loader-utils "^1.2.3"
+      normalize-path "^3.0.0"
+      postcss "^7.0.17"
+      postcss-modules-extract-imports "^2.0.0"
+      postcss-modules-local-by-default "^3.0.2"
+      postcss-modules-scope "^2.1.0"
+      postcss-modules-values "^3.0.0"
+      postcss-value-parser "^4.0.0"
+      schema-utils "^1.0.0"
+  
   css-select@^1.1.0:
     version "1.2.0"
     resolved "https://registry.yarnpkg.com/css-select/-/css-select-1.2.0.tgz#2b3a110539c5355f1cd8d314623e870b121ec858"
@@ -2388,6 +2400,11 @@ Lockfile:
     version "2.1.3"
     resolved "https://registry.yarnpkg.com/css-what/-/css-what-2.1.3.tgz#a6d7604573365fe74686c3f311c56513d88285f2"
     integrity sha512-a+EPoD+uZiNfh+5fxw2nO9QwFa6nJe2Or35fGY6Ipw1R3R4AGz1d1TEZrCegvw2YTmZ0jXirGYlzxxpYSHwpEg==
+  
+  cssesc@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
+    integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
   
   cyclist@~0.2.2:
     version "0.2.2"
@@ -2603,6 +2620,11 @@ Lockfile:
     dependencies:
       domelementtype "^1.3.0"
       entities "^1.1.1"
+  
+  dom-walk@^0.1.0:
+    version "0.1.1"
+    resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
+    integrity sha1-ZyIm3HTI95mtNTB9+TaroRrNYBg=
   
   domain-browser@^1.1.1:
     version "1.2.0"
@@ -3377,6 +3399,14 @@ Lockfile:
       is-windows "^1.0.1"
       which "^1.2.14"
   
+  global@^4.4.0:
+    version "4.4.0"
+    resolved "https://registry.yarnpkg.com/global/-/global-4.4.0.tgz#3e7b105179006a323ed71aafca3e9c57a5cc6406"
+    integrity sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==
+    dependencies:
+      min-document "^2.19.0"
+      process "^0.11.10"
+  
   globals@^11.1.0, globals@^11.7.0:
     version "11.12.0"
     resolved "https://registry.yarnpkg.com/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
@@ -3632,6 +3662,13 @@ Lockfile:
     dependencies:
       safer-buffer ">= 2.1.2 < 3"
   
+  icss-utils@^4.0.0, icss-utils@^4.1.1:
+    version "4.1.1"
+    resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-4.1.1.tgz#21170b53789ee27447c2f47dd683081403f9a467"
+    integrity sha512-4aFq7wvWyMHKgxsH8QQtGpvbASCf+eM3wPRLI6R+MgAnTCZ6STYsRvttLvRWK0Nfif5piF394St3HeJDaljGPA==
+    dependencies:
+      postcss "^7.0.14"
+  
   ieee754@^1.1.4:
     version "1.1.13"
     resolved "https://registry.yarnpkg.com/ieee754/-/ieee754-1.1.13.tgz#ec168558e95aa181fd87d37f55c32bbcb6708b84"
@@ -3674,6 +3711,11 @@ Lockfile:
     version "0.1.4"
     resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
     integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
+  
+  indexes-of@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/indexes-of/-/indexes-of-1.0.1.tgz#f30f716c8e2bd346c7b67d3df3915566a7c05607"
+    integrity sha1-8w9xbI4r00bHtn0985FVZqfAVgc=
   
   indexof@0.0.1:
     version "0.0.1"
@@ -4313,6 +4355,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
     integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
   
+  min-document@^2.19.0:
+    version "2.19.0"
+    resolved "https://registry.yarnpkg.com/min-document/-/min-document-2.19.0.tgz#7bd282e3f5842ed295bb748cdd9f1ffa2c824685"
+    integrity sha1-e9KC4/WELtKVu3SM3Z8f+iyCRoU=
+    dependencies:
+      dom-walk "^0.1.0"
+  
   minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz#2e194de044626d4a10e7f7fbc00ce73e83e4d5c7"
@@ -4489,6 +4538,11 @@ Lockfile:
     dependencies:
       lower-case "^1.1.1"
   
+  node-bin-setup@^1.0.0:
+    version "1.0.6"
+    resolved "https://registry.yarnpkg.com/node-bin-setup/-/node-bin-setup-1.0.6.tgz#4b5c9bb937ece702d7069b36ca78af4684677528"
+    integrity sha512-uPIxXNis1CRbv1DwqAxkgBk5NFV3s7cMN/Gf556jSw6jBvV7ca4F9lRL/8cALcZecRibeqU+5dFYqFFmzv5a0Q==
+  
   node-forge@0.7.5:
     version "0.7.5"
     resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.7.5.tgz#6c152c345ce11c52f465c2abd957e8639cd674df"
@@ -4545,6 +4599,13 @@ Lockfile:
     integrity sha512-uq1iL79YjfYC0WXoHbC/z28q/9pOl8kSHaXdWmAAc8No+bDwqkZbzIJz55g/MUsPgSGm9LZ7QSUbzTcH5tz47w==
     dependencies:
       semver "^5.3.0"
+  
+  node@^12.4.0:
+    version "12.4.0"
+    resolved "https://registry.yarnpkg.com/node/-/node-12.4.0.tgz#5501bf6d5dcbf41f84a9dbf80925ae6e7c2c91ae"
+    integrity sha512-DoxPPi1d1txnQFpoPzGBCiu2BsQK9nQPvu7xhcqD6GCvXsh5v/Gn8aeCs5euzt+k0HQOc3wjTI2WjM6qcDLIQA==
+    dependencies:
+      node-bin-setup "^1.0.0"
   
   nopt@^4.0.1:
     version "4.0.1"
@@ -5017,6 +5078,62 @@ Lockfile:
     version "0.1.1"
     resolved "https://registry.yarnpkg.com/posix-character-classes/-/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
     integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
+  
+  postcss-modules-extract-imports@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/postcss-modules-extract-imports/-/postcss-modules-extract-imports-2.0.0.tgz#818719a1ae1da325f9832446b01136eeb493cd7e"
+    integrity sha512-LaYLDNS4SG8Q5WAWqIJgdHPJrDDr/Lv775rMBFUbgjTz6j34lUznACHcdRWroPvXANP2Vj7yNK57vp9eFqzLWQ==
+    dependencies:
+      postcss "^7.0.5"
+  
+  postcss-modules-local-by-default@^3.0.2:
+    version "3.0.2"
+    resolved "https://registry.yarnpkg.com/postcss-modules-local-by-default/-/postcss-modules-local-by-default-3.0.2.tgz#e8a6561be914aaf3c052876377524ca90dbb7915"
+    integrity sha512-jM/V8eqM4oJ/22j0gx4jrp63GSvDH6v86OqyTHHUvk4/k1vceipZsaymiZ5PvocqZOl5SFHiFJqjs3la0wnfIQ==
+    dependencies:
+      icss-utils "^4.1.1"
+      postcss "^7.0.16"
+      postcss-selector-parser "^6.0.2"
+      postcss-value-parser "^4.0.0"
+  
+  postcss-modules-scope@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/postcss-modules-scope/-/postcss-modules-scope-2.1.0.tgz#ad3f5bf7856114f6fcab901b0502e2a2bc39d4eb"
+    integrity sha512-91Rjps0JnmtUB0cujlc8KIKCsJXWjzuxGeT/+Q2i2HXKZ7nBUeF9YQTZZTNvHVoNYj1AthsjnGLtqDUE0Op79A==
+    dependencies:
+      postcss "^7.0.6"
+      postcss-selector-parser "^6.0.0"
+  
+  postcss-modules-values@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/postcss-modules-values/-/postcss-modules-values-3.0.0.tgz#5b5000d6ebae29b4255301b4a3a54574423e7f10"
+    integrity sha512-1//E5jCBrZ9DmRX+zCtmQtRSV6PV42Ix7Bzj9GbwJceduuf7IqP8MgeTXuRDHOWj2m0VzZD5+roFWDuU8RQjcg==
+    dependencies:
+      icss-utils "^4.0.0"
+      postcss "^7.0.6"
+  
+  postcss-selector-parser@^6.0.0, postcss-selector-parser@^6.0.2:
+    version "6.0.2"
+    resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-6.0.2.tgz#934cf799d016c83411859e09dcecade01286ec5c"
+    integrity sha512-36P2QR59jDTOAiIkqEprfJDsoNrvwFei3eCqKd1Y0tUsBimsq39BLp7RD+JWny3WgB1zGhJX8XVePwm9k4wdBg==
+    dependencies:
+      cssesc "^3.0.0"
+      indexes-of "^1.0.1"
+      uniq "^1.0.1"
+  
+  postcss-value-parser@^4.0.0:
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/postcss-value-parser/-/postcss-value-parser-4.0.0.tgz#99a983d365f7b2ad8d0f9b8c3094926eab4b936d"
+    integrity sha512-ESPktioptiSUchCKgggAkzdmkgzKfmp0EU8jXH+5kbIUB+unr0Y4CY9SRMvibuvYUBjNh1ACLbxqYNpdTQOteQ==
+  
+  postcss@^7.0.14, postcss@^7.0.16, postcss@^7.0.17, postcss@^7.0.5, postcss@^7.0.6:
+    version "7.0.17"
+    resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.17.tgz#4da1bdff5322d4a0acaab4d87f3e782436bad31f"
+    integrity sha512-546ZowA+KZ3OasvQZHsbuEpysvwTZNGJv9EfyCQdsIDltPSWHAeTQ5fQy/Npi2ZDtLI3zs7Ps/p6wThErhm9fQ==
+    dependencies:
+      chalk "^2.4.2"
+      source-map "^0.6.1"
+      supports-color "^6.1.0"
   
   prelude-ls@~1.1.2:
     version "1.1.2"
@@ -5991,6 +6108,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
     integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
   
+  style-loader@^0.23.1:
+    version "0.23.1"
+    resolved "https://registry.yarnpkg.com/style-loader/-/style-loader-0.23.1.tgz#cb9154606f3e771ab6c4ab637026a1049174d925"
+    integrity sha512-XK+uv9kWwhZMZ1y7mysB+zoihsEj4wneFWAS5qoiLwzW0WzSqMrrsIy+a3zkQJq0ipFtBpX5W3MqyRIBF/WFGg==
+    dependencies:
+      loader-utils "^1.1.0"
+      schema-utils "^1.0.0"
+  
   supports-color@^2.0.0:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
@@ -6230,6 +6355,11 @@ Lockfile:
       get-value "^2.0.6"
       is-extendable "^0.1.1"
       set-value "^0.4.3"
+  
+  uniq@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/uniq/-/uniq-1.0.1.tgz#b31c5ae8254844a3a8281541ce2b04b865a734ff"
+    integrity sha1-sxxa6CVIRKOoKBVBzisEuGWnNP8=
   
   unique-filename@^1.1.1:
     version "1.1.1"
