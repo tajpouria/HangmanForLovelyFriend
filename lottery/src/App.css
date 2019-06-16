@@ -1,0 +1,32 @@
+.Ball {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  background-color: tomato;
+  color: aliceblue;
+  font-weight: bold;
+  border-radius: 50%;
+  margin: 5px;
+}
+.Loot {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1.5px solid gray;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.Loot div {
+  margin: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.Loot button {
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 20px;
+}
