@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import PokeDex from './PokeDex';
 
@@ -74,4 +75,8 @@ PokeGame.defaultProps = {
       base_experience: 65,
     },
   ],
+};
+
+PokeGame.propTypes = {
+  pokemons: PropTypes.array,
 };
