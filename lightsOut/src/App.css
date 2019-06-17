@@ -1,0 +1,11 @@
+.Cell {
+  height: 110px;
+  width: 110px;
+  background-color: grey;
+}
+
+.Cell-lightsOn {
+  height: 110px;
+  width: 110px;
+  background-color: greenyellow;
+}
