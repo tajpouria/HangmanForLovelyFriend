@@ -1,8 +1,9 @@
 import React from 'react';
 
-export default function Cell({ coords, lightsOn }) {
+export default function Cell({ coords, lightsOn, cellClick }) {
   const handleClick = () => {
-    console.log(coords);
+    cellClick(coords);
   };
+
   return <div onClick={handleClick} className={lightsOn ? 'Cell-lightsOn' : 'Cell'} />;
 }

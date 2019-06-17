@@ -1,3 +1,10 @@
+body {
+  display: flex;
+  flex: 2;
+  justify-content: center;
+  align-items: center;
+}
+
 .Cell {
   height: 110px;
   width: 110px;
@@ -8,4 +15,12 @@
   height: 110px;
   width: 110px;
   background-color: greenyellow;
+}
+
+.Board {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(3, 1, 12);
 }
