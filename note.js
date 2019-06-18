@@ -58,7 +58,33 @@ export default function note() {
     }
     </ThemContext.Consumer>
     )
-}
+  
+    // using multiply context
+
+//       <AuthContext.Consumer>
+//       {(authContext) => {
+//         const { isLoggedIn, toggleLogin } = authContext;
+
+//         return (
+//           <ThemeContext.Consumer>
+//             {(themeContext) => {
+//               const { isLightTheme, light, dark } = themeContext;
+//               const { syntax, ui } = isLightTheme ? light : dark;
+
+//               return (
+//                 <div style={{ color: syntax, backgroundColor: ui }} className="nav-link active">
+//                   <h1>Context Reading List</h1>
+//                   <button onClick={toggleLogin} className="btn-link nav-link" type="button">
+//                     {isLoggedIn ? 'Logout' : 'Login'}
+//                   </button>
+//                 </div>
+//               );
+//             }}
+//           </ThemeContext.Consumer>
+//         );
+//       }}
+//     </AuthContext.Consumer>
+// }
 
 // ## Modern React Course
 
@@ -79,3 +105,4 @@ export default class note extends Component {
     )
   }
 }
+
