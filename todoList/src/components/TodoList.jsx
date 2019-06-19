@@ -18,6 +18,7 @@ export default class TodoList extends Component {
   }
 
   addTodo(logic) {
+    if (this.state.todos.length >= 7) return alert('You have a lot uncompleted logic todo!');
     this.setState(st => ({ todos: [...st.todos, { id: uuid(), logic }] }));
   }
 
@@ -48,14 +49,18 @@ export default class TodoList extends Component {
         <h1 className="TodoList-header">
           <spn>Simple React TodoList</spn>
         </h1>
+
         <div className="TodoList-wrapList">
+          <div />
           {todos.map(({ id, logic }) => (
             <Todo id={id} key={id} editTodo={this.editTodo} removeTodo={this.removeTodo}>
               {logic}
             </Todo>
           ))}
+          <div className="TodoList-footer">
+            <NewTodoForm addTodo={this.addTodo} />
+          </div>
         </div>
-        <NewTodoForm addTodo={this.addTodo} />
       </div>
     );
   }

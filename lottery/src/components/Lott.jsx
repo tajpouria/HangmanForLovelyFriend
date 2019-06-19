@@ -31,7 +31,7 @@ export default class Lott extends Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title } = this.props; 
     const { numberOfBall } = this.state;
 
     return (

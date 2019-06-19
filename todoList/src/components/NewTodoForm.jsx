@@ -36,18 +36,10 @@ export default class NewTodoForm extends Component {
     return (
       <div className="NewTodoForm">
         <form className="NewTodoForm-form" onSubmit={this.handleSubmit}>
-          <label htmlFor="logic">
-            <input
-              className="NewTodoFrom-input"
-              name="logic"
-              value={logic}
-              onChange={this.handleChange}
-              type="text"
-            />
-          </label>
-          <button type="submit">
-            <i className="fas fa-plus-square Todo-icon" />
-          </button>
+            <label htmlFor="logic">
+              <input className="NewTodoForm-input" name="logic" value={logic} onChange={this.handleChange} type="text" />
+            </label>
+              <i onClick={this.handleSubmit} className="fas fa-plus-square NewTodoForm-add" />
         </form>
       </div>
     );

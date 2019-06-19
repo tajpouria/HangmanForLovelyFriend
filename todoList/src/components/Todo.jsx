@@ -56,13 +56,19 @@ export default class Todo extends Component {
     const { children } = this.props;
     const { isEditing, logic, completed } = this.state;
     return isEditing ? (
-      <form>
-        <input name="logic" type="text" value={logic} onChange={this.handleChanging} />
+      <form className="NewTodoForm">
+        <input
+          className="NewTodoForm-input"
+          name="logic"
+          type="text"
+          value={logic}
+          onChange={this.handleChanging}
+        />
         <button onClick={this.handleEditTodo} type="submit">
-          Submit
+          <i className="Todo-icon fas fa-check-circle" />
         </button>
         <button onClick={this.handleUndo} type="submit">
-          Undo
+          <i className="Todo-icon fas fa-undo" />
         </button>
       </form>
     ) : (

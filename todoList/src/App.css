@@ -38,6 +38,19 @@ body {
   box-shadow: inset 0 -2px 3px 2px rgba(0, 0, 0, 0.4),
     0 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
+.TodoList-footer {
+  width: 100%;
+  height: 50px;
+
+  border-radius: 0px 0px 10px 10px;
+  background-image: linear-gradient(#687480 0%, #3b4755 100%);
+  font: bold 18px/50px arial;
+  text-align: center;
+  color: white;
+  box-shadow: inset 0 -2px 3px 2px rgba(0, 0, 0, 0.4),
+    0 2px 2px 2px rgba(0, 0, 0, 0.4);
+  margin-bottom: -20px;
+}
 span {
   display: block;
   width: 100%;
@@ -45,16 +58,22 @@ span {
   border-bottom: dashed 2px #54687a;
 }
 .TodoList-wrapList {
+  display: flex;
+  flex-direction: column;
   height: 85%;
   padding: 20px 0px;
   box-shadow: inset 0 0px 5px black;
   border-radius: 0 0 10px 10px;
   background-image: linear-gradient(transparent 97%, gray 100%);
+  flex: 1;
+  justify-content: space-between;
 }
 .Todo {
   display: flex;
   justify-content: space-between;
-  margin: 5px;
+  margin: 3px 5px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 20px;
   background-color: lightgray;
 }
 .Todo-logic-completed {
@@ -68,10 +87,18 @@ span {
   display: flex;
   margin: 10px;
   height: 20px;
-  border: 2px solid grey;
   justify-content: center;
   align-items: center;
 }
 .NewTodoForm-form {
   display: flex;
+}
+.NewTodoForm-add {
+  display: flex;
+  align-self: center;
+}
+.NewTodoForm-input {
+  border-radius: 5px;
+  align-self: center;
+  border: 1px solid gray;
 }
