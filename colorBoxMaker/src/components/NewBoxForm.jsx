@@ -35,6 +35,7 @@ export default class NewBoxForm extends Component {
           width,
           backgroundColor,
           id: uuid(),
+          completed: false,
         },
       ],
     }));

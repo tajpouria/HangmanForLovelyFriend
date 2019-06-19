@@ -1,7 +1,8 @@
 import React from 'react';
 
-import NewTodoForm from './components/NewTodoForm';
+import './App.css';
+import TodoList from './components/TodoList';
 
 export default function App() {
-  return <NewTodoForm />;
+  return <TodoList />;
 }

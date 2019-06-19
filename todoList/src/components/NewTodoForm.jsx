@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-
-import TodoList from './TodoList';
+import PropTypes from 'prop-types';
 
 export default class NewTodoForm extends Component {
+  static propTypes = {
+    addTodo: PropTypes.func.isRequired,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
       logic: '',
-      todoList: [{ logic: 'feed fucking cat' }, { logic: 'bath my dog ass' }],
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,22 +23,31 @@ export default class NewTodoForm extends Component {
   handleSubmit(evt) {
     evt.preventDefault();
 
+    const { addTodo } = this.props;
     const { logic } = this.state;
-    this.setState(st => ({ todoList: [...st.todoList, { logic }] }));
+
+    addTodo(logic);
 
     this.setState({ logic: '' });
   }
 
   render() {
-    const { logic, todoList } = this.state;
+    const { logic } = this.state;
     return (
-      <div>
-        <TodoList todoList={todoList} />
-        <form onSubmit={this.handleSubmit}>
+      <div className="NewTodoForm">
+        <form className="NewTodoForm-form" onSubmit={this.handleSubmit}>
           <label htmlFor="logic">
-            <input name="logic" value={logic} onChange={this.handleChange} type="text" />
+            <input
+              className="NewTodoFrom-input"
+              name="logic"
+              value={logic}
+              onChange={this.handleChange}
+              type="text"
+            />
           </label>
-          <button type="submit">Add ToDo</button>
+          <button type="submit">
+            <i className="fas fa-plus-square Todo-icon" />
+          </button>
         </form>
       </div>
     );
