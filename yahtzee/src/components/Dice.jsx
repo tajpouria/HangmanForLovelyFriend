@@ -1,5 +1,13 @@
 import React from 'react';
 
-export default function Dice({ dice }) {
-  return dice.map(({ side }) => <div>{side}</div>);
+import Die from './Die';
+
+export default function Dice({ dice, lock }) {
+  const handleLock = id => lock(id);
+
+  return dice.map(({ side, id }) => (
+    <Die id={id} lock={handleLock}>
+      {side}
+    </Die>
+  ));
 }
