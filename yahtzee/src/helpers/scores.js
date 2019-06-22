@@ -1,0 +1,9 @@
+export const ONE_PAIR = 'oneofakind';
+export const TWO_PAIR = 'twoofakind';
+export const THREE_OF_A_KIND = 'threeofakind';
+export const FOUR_OF_A_KIND = 'fourofaking';
+export const FULL_HOUSE = 'fullHouse';
+export const SMALL_STRAIGHT = 'smallstraight';
+export const LONG_STRAIGHT = 'longstraight';
+export const CHANCE = 'chance';
+export const YATZY = 'yatzy';

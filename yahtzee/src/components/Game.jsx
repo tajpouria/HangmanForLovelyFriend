@@ -3,7 +3,21 @@ import uuid from 'uuid/v4';
 
 import Dice from './Dice';
 import Header from './Header';
-import { Chance } from '../helpers/rules';
+
+import {
+  Pair, Kind, FullHouse, Straight,
+} from '../helpers/rules';
+import {
+  ONE_PAIR,
+  TWO_PAIR,
+  THREE_OF_A_KIND,
+  FOUR_OF_A_KIND,
+  FULL_HOUSE,
+  SMALL_STRAIGHT,
+  LONG_STRAIGHT,
+  CHANCE,
+  YATZY,
+} from '../helpers/scores';
 
 export default class Game extends Component {
   static defaultProps = {
@@ -34,6 +48,14 @@ export default class Game extends Component {
     });
 
     this.setState(() => ({ dies: newDies }));
+    const pair = new Pair(newDies);
+    const kind = new Kind(newDies);
+    const fullHouse = new FullHouse(newDies);
+    const straight = new Straight(newDies);
+    console.log(pair.isPair());
+    console.log(kind.isKind());
+    console.log(fullHouse.isFullHouse());
+    console.log(straight.isStraight());
   }
 
   lock(id) {
@@ -50,8 +72,6 @@ export default class Game extends Component {
 
   render() {
     const { dies } = this.state;
-    const chance = new Chance(dies);
-    console.log(chance.calChance());
     return (
       <Header rollDices={this.rollDices}>
         <Dice lock={this.lock} dice={dies} />
