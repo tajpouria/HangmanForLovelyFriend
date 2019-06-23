@@ -43,9 +43,10 @@ class Rule {
 class Pair extends Rule {
   isPair() {
     const sameDice = this.isSame();
+    console.log(sameDice);
 
-    if (sameDice.length === 2) return { type: ONE_PAIR, score: this.sum(sameDice) };
-    if (sameDice.length === 4) return { type: TWO_PAIR, score: this.sum(sameDice) };
+    if (sameDice.length >= 2) return { type: ONE_PAIR, score: this.sum(sameDice) };
+    if (sameDice.length >= 4) return { type: TWO_PAIR, score: this.sum(sameDice) };
     if (sameDice.length === 5) return { type: YATZY, score: 50 };
   }
 }

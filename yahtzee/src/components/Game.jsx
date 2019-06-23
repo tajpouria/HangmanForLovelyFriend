@@ -3,11 +3,18 @@ import uuid from 'uuid/v4';
 
 import Dice from './Dice';
 import Header from './Header';
+import ScoreBoard from './ScoreBoard';
 
 import {
   Pair, Kind, FullHouse, Straight, Chance, UpperScore,
 } from '../helpers/rules';
 import {
+  ONE,
+  TWO,
+  THREE,
+  FOUR,
+  FIVE,
+  SIX,
   ONE_PAIR,
   TWO_PAIR,
   THREE_OF_A_KIND,
@@ -22,6 +29,25 @@ import {
 export default class Game extends Component {
   static defaultProps = {
     NUMBER_OF_DIES: 5,
+    upperScores: [
+      { type: ONE },
+      { type: TWO },
+      { type: THREE },
+      { type: FOUR },
+      { type: FIVE },
+      { type: SIX },
+    ],
+    lowerScores: [
+      { type: ONE_PAIR },
+      { type: TWO_PAIR },
+      { type: THREE_OF_A_KIND },
+      { type: FOUR_OF_A_KIND },
+      { type: SMALL_STRAIGHT },
+      { type: LONG_STRAIGHT },
+      { type: FULL_HOUSE },
+      { type: CHANCE },
+      { type: YATZY },
+    ],
   };
 
   constructor(props) {
@@ -32,6 +58,7 @@ export default class Game extends Component {
         side: Math.ceil(Math.random() * 6),
         locked: false,
       }),
+      scores: {},
     };
 
     this.rollDices = this.rollDices.bind(this);
@@ -54,17 +81,22 @@ export default class Game extends Component {
     const fullHouse = new FullHouse(newDies);
     const straight = new Straight(newDies);
     const chance = new Chance(newDies);
-    console.log(upperScore.one());
-    console.log(upperScore.two());
-    console.log(upperScore.three());
-    console.log(upperScore.four());
-    console.log(upperScore.five());
-    console.log(upperScore.six());
-    console.log(pair.isPair());
-    console.log(kind.isKind());
-    console.log(fullHouse.isFullHouse());
-    console.log(straight.isStraight());
-    console.log(chance.isChance());
+
+    this.setState({
+      scores: {
+        one: upperScore.one(newDies),
+        two: upperScore.two(newDies),
+        three: upperScore.three(newDies),
+        four: upperScore.four(newDies),
+        five: upperScore.five(newDies),
+        six: upperScore.six(newDies),
+        pair: pair.isPair(newDies),
+        kind: kind.isKind(newDies),
+        fullHouse: fullHouse.isFullHouse(),
+        straight: straight.isStraight(newDies),
+        chance: chance.isChance(),
+      },
+    });
   }
 
   lock(id) {
@@ -80,11 +112,15 @@ export default class Game extends Component {
   }
 
   render() {
-    const { dies } = this.state;
+    const { dies, scores } = this.state;
+    const { upperScores, lowerScores } = this.props;
     return (
-      <Header rollDices={this.rollDices}>
-        <Dice lock={this.lock} dice={dies} />
-      </Header>
+      <div className="Game">
+        <Header rollDices={this.rollDices}>
+          <Dice lock={this.lock} dice={dies} />
+        </Header>
+        <ScoreBoard scores={scores} upperScores={upperScores} lowerScores={lowerScores} />
+      </div>
     );
   }
 }
