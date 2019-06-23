@@ -1,4 +1,10 @@
 import {
+  ONE,
+  TWO,
+  THREE,
+  FOUR,
+  FIVE,
+  SIX,
   ONE_PAIR,
   TWO_PAIR,
   THREE_OF_A_KIND,
@@ -16,7 +22,7 @@ class Rule {
   }
 
   sum(dice) {
-    return dice.reduce((prev, curr) => prev + curr);
+    return dice.length >= 1 ? dice.reduce((prev, curr) => prev + curr) : dice;
   }
 
   isSame() {
@@ -26,6 +32,12 @@ class Rule {
     });
     return sameDice;
   }
+
+  isSameToGive(die) {
+    const sameToDie = [];
+    this.dice.map(d => d === die && sameToDie.push(die));
+    return sameToDie;
+  }
 }
 
 class Pair extends Rule {
@@ -34,6 +46,7 @@ class Pair extends Rule {
 
     if (sameDice.length === 2) return { type: ONE_PAIR, score: this.sum(sameDice) };
     if (sameDice.length === 4) return { type: TWO_PAIR, score: this.sum(sameDice) };
+    if (sameDice.length === 5) return { type: YATZY, score: 50 };
   }
 }
 
@@ -61,8 +74,8 @@ class Straight extends Rule {
       const smallStraightBool = [];
       const longStraightBool = [];
       for (let i = 0; i <= sameDice.length - 1; i++) {
-        sameDice[i] === i + 2 ? longStraightBool.push(true) : longStraightBool.push(false);
-        sameDice[i] === i + 1 ? smallStraightBool.push(true) : smallStraightBool.push(false);
+        sameDice[0] === 2 && sameDice[i] + 1 === sameDice[i + 1] && longStraightBool.push(true);
+        sameDice[0] === 1 && sameDice[i] + 1 === sameDice[i + 1] && smallStraightBool.push(true);
       }
       return { longStraightBool, smallStraightBool };
     };
@@ -71,17 +84,49 @@ class Straight extends Rule {
   isStraight() {
     const { dice } = this;
 
-    if (
-      this.increasingStraight(dice).longStraightBool.length === 4
-      && !this.increasingStraight(dice).longStraightBool.indexOf(false)
-    ) return { type: LONG_STRAIGHT, score: 20 };
-    if (
-      this.increasingStraight(dice).smallStraightBool.length === 4
-      && !this.increasingStraight(dice).longStraightBool.indexOf(false)
-    ) return { type: SMALL_STRAIGHT, score: 15 };
+    if (this.increasingStraight(dice).longStraightBool.length === 4) return { type: LONG_STRAIGHT, score: 20 };
+    if (this.increasingStraight(dice).smallStraightBool.length === 4) return { type: SMALL_STRAIGHT, score: 15 };
+  }
+}
+
+class Chance extends Rule {
+  isChance() {
+    return { type: CHANCE, score: this.sum(this.dice) };
+  }
+}
+
+class UpperScore extends Rule {
+  one() {
+    const score = this.sum(this.isSameToGive(1));
+    return { type: ONE, score };
+  }
+
+  two() {
+    const score = this.sum(this.isSameToGive(2));
+    return { type: TWO, score };
+  }
+
+  three() {
+    const score = this.sum(this.isSameToGive(3));
+    return { type: THREE, score };
+  }
+
+  four() {
+    const score = this.sum(this.isSameToGive(4));
+    return { type: FOUR, score };
+  }
+
+  five() {
+    const score = this.sum(this.isSameToGive(5));
+    return { type: FIVE, score };
+  }
+
+  six() {
+    const score = this.sum(this.isSameToGive(6));
+    return { type: SIX, score };
   }
 }
 
 export {
-  Pair, Kind, FullHouse, Straight,
+  UpperScore, Pair, Kind, FullHouse, Straight, Chance,
 };

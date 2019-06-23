@@ -5,7 +5,7 @@ import Dice from './Dice';
 import Header from './Header';
 
 import {
-  Pair, Kind, FullHouse, Straight,
+  Pair, Kind, FullHouse, Straight, Chance, UpperScore,
 } from '../helpers/rules';
 import {
   ONE_PAIR,
@@ -48,14 +48,23 @@ export default class Game extends Component {
     });
 
     this.setState(() => ({ dies: newDies }));
+    const upperScore = new UpperScore(newDies);
     const pair = new Pair(newDies);
     const kind = new Kind(newDies);
     const fullHouse = new FullHouse(newDies);
     const straight = new Straight(newDies);
+    const chance = new Chance(newDies);
+    console.log(upperScore.one());
+    console.log(upperScore.two());
+    console.log(upperScore.three());
+    console.log(upperScore.four());
+    console.log(upperScore.five());
+    console.log(upperScore.six());
     console.log(pair.isPair());
     console.log(kind.isKind());
     console.log(fullHouse.isFullHouse());
     console.log(straight.isStraight());
+    console.log(chance.isChance());
   }
 
   lock(id) {
