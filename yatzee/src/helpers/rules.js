@@ -22,7 +22,7 @@ class Rule {
   }
 
   sum(dice) {
-    return dice.length >= 1 ? dice.reduce((prev, curr) => prev + curr) : dice;
+    return dice && dice.length >= 1 ? dice.reduce((prev, curr) => prev + curr) : dice;
   }
 
   isSame() {
@@ -36,22 +36,58 @@ class Rule {
   isSameToGive(die) {
     const sameToDie = [];
     this.dice.map(d => d === die && sameToDie.push(die));
-    return sameToDie;
+    return sameToDie.length === 0 ? undefined : sameToDie;
   }
 }
 
 class OnePair extends Rule {
-  isPair() {
-    const sameDice = this.isSame();
+  constructor(args) {
+    super(args);
 
-    if (sameDice.length >= 2) return { type: ONE_PAIR, score: this.sum(sameDice) };
+    this.setSameDice = [...new Set(this.isSame())];
+
+    this.scoreCalculator = function scoreCalculator() {
+      const { setSameDice } = this;
+
+      switch (this.setSameDice.length) {
+        case 1:
+          return this.sum([setSameDice[0], setSameDice[0]]);
+        case 2:
+          return this.sum([setSameDice[1], setSameDice[1]]);
+        default:
+          return undefined;
+      }
+    };
+  }
+
+  isPair() {
+    return this.setSameDice.length >= 1 && { type: ONE_PAIR, score: this.scoreCalculator() };
   }
 }
-class TwoPair extends Rule {
-  isPair() {
-    const sameDice = this.isSame();
 
-    if (sameDice.length >= 4) return { type: TWO_PAIR, score: this.sum(sameDice) };
+class TwoPair extends Rule {
+  constructor(args) {
+    super(args);
+    this.sameDice = this.isSame();
+    this.setSameDice = [...new Set(this.isSame())];
+
+    this.scoreCalculator = function scoreCalculator() {
+      const { setSameDice, sameDice } = this;
+
+      if (setSameDice.length === 2) return this.sum([setSameDice[0], setSameDice[0], setSameDice[1], setSameDice[1]]);
+
+      if (sameDice.length === 4 && setSameDice.length === 1) return { type: TWO_PAIR, score: this.sum(sameDice) };
+
+      if (sameDice.length === 5 && setSameDice.length === 1) {
+        sameDice.pop();
+        return { type: TWO_PAIR, score: this.sum(sameDice) };
+      }
+      return undefined;
+    };
+  }
+
+  isPair() {
+    if (this.setSameDice.length >= 2) return { type: TWO_PAIR, score: this.scoreCalculator() };
   }
 }
 
