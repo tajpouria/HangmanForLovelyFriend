@@ -6,7 +6,15 @@ import Header from './Header';
 import ScoreBoard from './ScoreBoard';
 
 import {
-  Pair, Kind, FullHouse, Straight, Chance, UpperScore,
+  OnePair,
+  TwoPair,
+  ThreeOfAKind,
+  FourOfAKind,
+  FullHouse,
+  Straight,
+  Chance,
+  UpperScore,
+  Yatzy,
 } from '../helpers/rules';
 import {
   ONE,
@@ -74,15 +82,18 @@ export default class Game extends Component {
       newDies.push(newDie);
     });
 
-    this.setState(() => ({ dies: newDies }));
     const upperScore = new UpperScore(newDies);
-    const pair = new Pair(newDies);
-    const kind = new Kind(newDies);
+    const onePair = new OnePair(newDies);
+    const twoPair = new TwoPair(newDies);
+    const threeOfAKind = new ThreeOfAKind(newDies);
+    const fourOfAKind = new FourOfAKind(newDies);
     const fullHouse = new FullHouse(newDies);
     const straight = new Straight(newDies);
     const chance = new Chance(newDies);
+    const yatzy = new Yatzy(newDies);
 
     this.setState({
+      dies: newDies,
       scores: {
         one: upperScore.one(newDies),
         two: upperScore.two(newDies),
@@ -90,11 +101,14 @@ export default class Game extends Component {
         four: upperScore.four(newDies),
         five: upperScore.five(newDies),
         six: upperScore.six(newDies),
-        pair: pair.isPair(newDies),
-        kind: kind.isKind(newDies),
+        onePair: onePair.isPair(newDies),
+        twoPair: twoPair.isPair(newDies),
+        threeOfAKind: threeOfAKind.isKind(newDies),
+        fourOfAKind: fourOfAKind.isKind(newDies),
         fullHouse: fullHouse.isFullHouse(),
         straight: straight.isStraight(newDies),
         chance: chance.isChance(),
+        yatzy: yatzy.isYatzy(),
       },
     });
   }

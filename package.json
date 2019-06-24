@@ -5,7 +5,7 @@
   "author": "tajpouria",
   "license": "MIT",
   "scripts": {
-    "start": "cd yahtzee && webpack-dev-server --node development --open --hot",
+    "start": "cd contextReadingList && webpack-dev-server --node development --open --hot",
     "build": "cd contextReadingList && webpack --mode production"
   },
   "dependencies": {

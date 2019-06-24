@@ -40,23 +40,33 @@ class Rule {
   }
 }
 
-class Pair extends Rule {
+class OnePair extends Rule {
   isPair() {
     const sameDice = this.isSame();
-    console.log(sameDice);
 
     if (sameDice.length >= 2) return { type: ONE_PAIR, score: this.sum(sameDice) };
+  }
+}
+class TwoPair extends Rule {
+  isPair() {
+    const sameDice = this.isSame();
+
     if (sameDice.length >= 4) return { type: TWO_PAIR, score: this.sum(sameDice) };
-    if (sameDice.length === 5) return { type: YATZY, score: 50 };
   }
 }
 
-class Kind extends Rule {
+class ThreeOfAKind extends Rule {
   isKind() {
     const sameDice = this.isSame();
 
-    if (sameDice.length === 3) return { type: THREE_OF_A_KIND, score: this.sum(sameDice) };
-    if (sameDice.length === 4) return { type: FOUR_OF_A_KIND, score: this.sum(sameDice) };
+    if (sameDice.length >= 4 && [...new Set(sameDice)].length === 1) return { type: THREE_OF_A_KIND, score: this.sum(sameDice) };
+  }
+}
+class FourOfAKind extends Rule {
+  isKind() {
+    const sameDice = this.isSame();
+
+    if (sameDice.length >= 4 && [...new Set(sameDice)].length === 1) return { type: FOUR_OF_A_KIND, score: this.sum(sameDice) };
   }
 }
 
@@ -96,6 +106,14 @@ class Chance extends Rule {
   }
 }
 
+class Yatzy extends Rule {
+  isYatzy() {
+    const sameDice = this.isSame();
+
+    if (sameDice.length === 5) return { type: YATZY, score: 50 };
+  }
+}
+
 class UpperScore extends Rule {
   one() {
     const score = this.sum(this.isSameToGive(1));
@@ -129,5 +147,13 @@ class UpperScore extends Rule {
 }
 
 export {
-  UpperScore, Pair, Kind, FullHouse, Straight, Chance,
+  UpperScore,
+  OnePair,
+  TwoPair,
+  ThreeOfAKind,
+  FourOfAKind,
+  FullHouse,
+  Straight,
+  Chance,
+  Yatzy,
 };
