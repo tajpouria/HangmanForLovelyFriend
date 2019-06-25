@@ -11,7 +11,8 @@ import {
   ThreeOfAKind,
   FourOfAKind,
   FullHouse,
-  Straight,
+  SmallStraight,
+  LongStraight,
   Chance,
   UpperScore,
   Yatzy,
@@ -88,7 +89,8 @@ export default class Game extends Component {
     const threeOfAKind = new ThreeOfAKind(newDies);
     const fourOfAKind = new FourOfAKind(newDies);
     const fullHouse = new FullHouse(newDies);
-    const straight = new Straight(newDies);
+    const smallStraight = new SmallStraight(newDies);
+    const longStraight = new LongStraight(newDies);
     const chance = new Chance(newDies);
     const yatzy = new Yatzy(newDies);
 
@@ -101,12 +103,13 @@ export default class Game extends Component {
         four: upperScore.four(newDies),
         five: upperScore.five(newDies),
         six: upperScore.six(newDies),
-        onePair: onePair.isPair(newDies),
-        twoPair: twoPair.isPair(newDies),
-        threeOfAKind: threeOfAKind.isKind(newDies),
-        fourOfAKind: fourOfAKind.isKind(newDies),
-        fullHouse: fullHouse.isFullHouse(),
-        straight: straight.isStraight(newDies),
+        onepair: onePair.isPair(newDies),
+        twopair: twoPair.isPair(newDies),
+        threeofakind: threeOfAKind.isKind(newDies),
+        fourofakind: fourOfAKind.isKind(newDies),
+        fullhouse: fullHouse.isFullHouse(),
+        smallstraight: smallStraight.isStraight(newDies),
+        longstraight: longStraight.isStraight(newDies),
         chance: chance.isChance(),
         yatzy: yatzy.isYatzy(),
       },
