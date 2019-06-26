@@ -2,6 +2,7 @@ import React from 'react';
 
 import ThemeContextProvider from './context/ThemeContext';
 import AuthContextProvider from './context/AuthContext';
+import BookContextProvider from './context/BookContext';
 import Navbar from './components/Navbar';
 import BookList from './components/BookList';
 import ToggleThemeButton from './components/ToggleThemeButton';
@@ -11,7 +12,9 @@ export default function App() {
     <AuthContextProvider>
       <ThemeContextProvider>
         <Navbar />
-        <BookList />
+        <BookContextProvider>
+          <BookList />
+        </BookContextProvider>
         <ToggleThemeButton />
       </ThemeContextProvider>
     </AuthContextProvider>

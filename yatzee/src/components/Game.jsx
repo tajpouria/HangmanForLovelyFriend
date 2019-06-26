@@ -106,25 +106,28 @@ export default class Game extends Component {
     const chance = new Chance(newDies);
     const yatzy = new Yatzy(newDies);
 
-    this.setState({
-      dies: newDies,
-      scores: {
-        one: upperScore.one(newDies),
-        two: upperScore.two(newDies),
-        three: upperScore.three(newDies),
-        four: upperScore.four(newDies),
-        five: upperScore.five(newDies),
-        six: upperScore.six(newDies),
-        onepair: onePair.isPair(newDies),
-        twopair: twoPair.isPair(newDies),
-        threeofakind: threeOfAKind.isKind(newDies),
-        fourofakind: fourOfAKind.isKind(newDies),
-        fullhouse: fullHouse.isFullHouse(),
-        smallstraight: smallStraight.isStraight(newDies),
-        longstraight: longStraight.isStraight(newDies),
-        chance: chance.isChance(),
-        yatzy: yatzy.isYatzy(),
-      },
+    this.setState(() => {
+      console.log('');
+      return {
+        dies: newDies,
+        scores: {
+          one: upperScore.one(newDies),
+          two: upperScore.two(newDies),
+          three: upperScore.three(newDies),
+          four: upperScore.four(newDies),
+          five: upperScore.five(newDies),
+          six: upperScore.six(newDies),
+          onepair: onePair.isPair(newDies),
+          twopair: twoPair.isPair(newDies),
+          threeofakind: threeOfAKind.isKind(newDies),
+          fourofakind: fourOfAKind.isKind(newDies),
+          fullhouse: fullHouse.isFullHouse(),
+          smallstraight: smallStraight.isStraight(newDies),
+          longstraight: longStraight.isStraight(newDies),
+          chance: chance.isChance(),
+          yatzy: yatzy.isYatzy(),
+        },
+      };
     });
   }
 

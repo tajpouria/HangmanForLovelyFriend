@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  background-color: #553055;
+}
+
+.Navbar {
+  padding: 10px 2px;
+  text-align: center;
+  background-color: #6d3d6d;
+}
+
+.Navbar-header {
+  margin: 10px 0;
+  color: #fff;
+}
+
+.Navbar-counter {
+  color: #fff;
+}
