@@ -69,6 +69,7 @@ export default class Game extends Component {
       }),
       scores: {},
       totalScore: 0,
+      rollCounter: 0,
     };
 
     this.rollDices = this.rollDices.bind(this);
@@ -77,11 +78,20 @@ export default class Game extends Component {
   }
 
   setScore(children, score) {
+    const { NUMBER_OF_DIES } = this.props;
+
     if (score) {
       this.setState(st => ({ totalScore: st.totalScore + score }));
       this.setState((st) => {
         st.scores[children.replace(/\s/g, '').toLowerCase()].used = true;
-        return { scores: st.scores };
+        return {
+          scores: st.scores,
+          rollCounter: 0,
+          dies: Array(NUMBER_OF_DIES).fill({
+            side: Math.ceil(Math.random() * 6),
+            locked: false,
+          }),
+        };
       });
     }
   }
@@ -106,9 +116,10 @@ export default class Game extends Component {
     const chance = new Chance(newDies);
     const yatzy = new Yatzy(newDies);
 
-    this.setState(() => {
+    this.setState((st) => {
       console.log('');
       return {
+        rollCounter: st.rollCounter + 1,
         dies: newDies,
         scores: {
           one: upperScore.one(newDies),
@@ -144,11 +155,13 @@ export default class Game extends Component {
   }
 
   render() {
-    const { dies, scores, totalScore } = this.state;
+    const {
+      dies, scores, totalScore, rollCounter,
+    } = this.state;
     const { upperScores, lowerScores } = this.props;
     return (
       <div className="Game">
-        <Header rollDices={this.rollDices}>
+        <Header rollCounter={rollCounter} rollDices={this.rollDices}>
           <Dice lock={this.lock} dice={dies} />
         </Header>
         <ScoreBoard
@@ -158,7 +171,8 @@ export default class Game extends Component {
           lowerScores={lowerScores}
         />
         <p>
-          TotalScore:
+          Total Score :
+          {'  '}
           {totalScore}
         </p>
       </div>
