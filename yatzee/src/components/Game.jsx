@@ -68,10 +68,22 @@ export default class Game extends Component {
         locked: false,
       }),
       scores: {},
+      totalScore: 0,
     };
 
     this.rollDices = this.rollDices.bind(this);
     this.lock = this.lock.bind(this);
+    this.setScore = this.setScore.bind(this);
+  }
+
+  setScore(children, score) {
+    if (score) {
+      this.setState(st => ({ totalScore: st.totalScore + score }));
+      this.setState((st) => {
+        st.scores[children.replace(/\s/g, '').toLowerCase()].used = true;
+        return { scores: st.scores };
+      });
+    }
   }
 
   rollDices() {
@@ -129,14 +141,23 @@ export default class Game extends Component {
   }
 
   render() {
-    const { dies, scores } = this.state;
+    const { dies, scores, totalScore } = this.state;
     const { upperScores, lowerScores } = this.props;
     return (
       <div className="Game">
         <Header rollDices={this.rollDices}>
           <Dice lock={this.lock} dice={dies} />
         </Header>
-        <ScoreBoard scores={scores} upperScores={upperScores} lowerScores={lowerScores} />
+        <ScoreBoard
+          setScore={this.setScore}
+          scores={scores}
+          upperScores={upperScores}
+          lowerScores={lowerScores}
+        />
+        <p>
+          TotalScore:
+          {totalScore}
+        </p>
       </div>
     );
   }

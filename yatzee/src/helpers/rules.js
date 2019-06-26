@@ -115,7 +115,8 @@ class ThreeOfAKind extends Rule {
       let bCounter = 0;
       for (let i = 0; i < this.sameDice.length; i++) this.sameDice[i] === a ? aCounter++ : bCounter++;
 
-      return aCounter > bCounter ? a : b;
+      if (aCounter >= 3) return a;
+      if (bCounter >= 3) return b;
     };
 
     this.scoreCalculator = function scoreCalculator() {
@@ -129,7 +130,7 @@ class ThreeOfAKind extends Rule {
   }
 
   isKind() {
-    if (this.sameDice.length >= 3) return { type: THREE_OF_A_KIND, score: this.scoreCalculator() };
+    if (this.sameDice.length >= 3 && this.isRealKind()) return { type: THREE_OF_A_KIND, score: this.scoreCalculator() };
     return undefined;
   }
 }
