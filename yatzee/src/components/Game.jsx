@@ -70,6 +70,7 @@ export default class Game extends Component {
       scores: {},
       totalScore: 0,
       rollCounter: 0,
+      shouldRoll: true,
     };
 
     this.rollDices = this.rollDices.bind(this);
@@ -81,7 +82,7 @@ export default class Game extends Component {
     const { NUMBER_OF_DIES } = this.props;
 
     if (score) {
-      this.setState(st => ({ totalScore: st.totalScore + score }));
+      this.setState(st => ({ totalScore: st.totalScore + score, shouldRoll: true }));
       this.setState((st) => {
         st.scores[children.replace(/\s/g, '').toLowerCase()].used = true;
         return {
@@ -108,6 +109,7 @@ export default class Game extends Component {
     this.setState(st => ({
       rollCounter: st.rollCounter + 1,
       dies: newDies,
+      shouldRoll: false,
     }));
 
     this.setState(
@@ -129,44 +131,41 @@ export default class Game extends Component {
           chance,
           yatzy,
         },
-      }) => {
-        // whenever a score clicked it and it's type
-        // should not change till user press restart
+      }) =>
+      // whenever a score clicked it and it's type
+      // should not change till user press restart
 
-        // for first roll this setState should invoked
+      // for first roll this setState should invoked
 
         // for next rolls this setState or another setState should invoke if the
         // score property does not have used prop
-
-        console.log('object');
-        return {
+        ({
           scores: {
-            one: one && one.used ? one : new UpperScore(dies).one(),
-            two: two && two.used ? two : new UpperScore(dies).two(),
-            three: three && three.used ? three : new UpperScore(dies).three(),
-            four: four && four.used ? four : new UpperScore(dies).four(),
-            five: five && five.used ? five : new UpperScore(dies).five(),
-            six: six && six.used ? six : new UpperScore(dies).six(),
-            onepair: onepair && onepair.used ? onepair : new OnePair(dies).isPair(),
-            twopair: twopair && twopair.used ? twopair : new TwoPair(dies).isPair(),
+            one: one && one.used ? one : new UpperScore(newDies).one(),
+            two: two && two.used ? two : new UpperScore(newDies).two(),
+            three: three && three.used ? three : new UpperScore(newDies).three(),
+            four: four && four.used ? four : new UpperScore(newDies).four(),
+            five: five && five.used ? five : new UpperScore(newDies).five(),
+            six: six && six.used ? six : new UpperScore(newDies).six(),
+            onepair: onepair && onepair.used ? onepair : new OnePair(newDies).isPair(),
+            twopair: twopair && twopair.used ? twopair : new TwoPair(newDies).isPair(),
             threeofakind:
-              threeofakind && threeofakind.used ? threeofakind : new ThreeOfAKind(dies).isKind(),
+              threeofakind && threeofakind.used ? threeofakind : new ThreeOfAKind(newDies).isKind(),
             fourofakind:
-              fourofakind && fourofakind.used ? fourofakind : new FourOfAKind(dies).isKind(),
-            fullhouse: fullhouse && fullhouse.used ? fullhouse : new FullHouse(dies).isFullHouse(),
+              fourofakind && fourofakind.used ? fourofakind : new FourOfAKind(newDies).isKind(),
+            fullhouse: fullhouse && fullhouse.used ? fullhouse : new FullHouse(newDies).isFullHouse(),
             smallstraight:
               smallstraight && smallstraight.used
                 ? smallstraight
-                : new SmallStraight(dies).isStraight(),
+                : new SmallStraight(newDies).isStraight(),
             longstraight:
               longstraight && longstraight.user
                 ? longstraight
-                : new LongStraight(dies).isStraight(),
-            chance: chance && chance.used ? chance : new Chance(dies).isChance(),
-            yatzy: yatzy && yatzy.used ? yatzy : new Yatzy(dies).isYatzy(),
+                : new LongStraight(newDies).isStraight(),
+            chance: chance && chance.used ? chance : new Chance(newDies).isChance(),
+            yatzy: yatzy && yatzy.used ? yatzy : new Yatzy(newDies).isYatzy(),
           },
-        };
-      },
+        }),
     );
   }
 
@@ -184,7 +183,7 @@ export default class Game extends Component {
 
   render() {
     const {
-      dies, scores, totalScore, rollCounter,
+      dies, scores, totalScore, rollCounter, shouldRoll,
     } = this.state;
     const { upperScores, lowerScores } = this.props;
     return (
@@ -197,6 +196,7 @@ export default class Game extends Component {
           scores={scores}
           upperScores={upperScores}
           lowerScores={lowerScores}
+          shouldRoll={shouldRoll}
         />
         <p>
           Total Score :
