@@ -82,7 +82,10 @@ export default class Game extends Component {
     const { NUMBER_OF_DIES } = this.props;
 
     if (score) {
-      this.setState(st => ({ totalScore: st.totalScore + score, shouldRoll: true }));
+      this.setState(st => ({
+        totalScore: st.totalScore + score,
+        shouldRoll: true,
+      }));
       this.setState((st) => {
         st.scores[children.replace(/\s/g, '').toLowerCase()].used = true;
         return {
@@ -153,7 +156,8 @@ export default class Game extends Component {
               threeofakind && threeofakind.used ? threeofakind : new ThreeOfAKind(newDies).isKind(),
             fourofakind:
               fourofakind && fourofakind.used ? fourofakind : new FourOfAKind(newDies).isKind(),
-            fullhouse: fullhouse && fullhouse.used ? fullhouse : new FullHouse(newDies).isFullHouse(),
+            fullhouse:
+              fullhouse && fullhouse.used ? fullhouse : new FullHouse(newDies).isFullHouse(),
             smallstraight:
               smallstraight && smallstraight.used
                 ? smallstraight
