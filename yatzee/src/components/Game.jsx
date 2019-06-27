@@ -105,41 +105,69 @@ export default class Game extends Component {
       newDies.push(newDie);
     });
 
-    const upperScore = new UpperScore(newDies);
-    const onePair = new OnePair(newDies);
-    const twoPair = new TwoPair(newDies);
-    const threeOfAKind = new ThreeOfAKind(newDies);
-    const fourOfAKind = new FourOfAKind(newDies);
-    const fullHouse = new FullHouse(newDies);
-    const smallStraight = new SmallStraight(newDies);
-    const longStraight = new LongStraight(newDies);
-    const chance = new Chance(newDies);
-    const yatzy = new Yatzy(newDies);
+    this.setState(st => ({
+      rollCounter: st.rollCounter + 1,
+      dies: newDies,
+    }));
 
-    this.setState((st) => {
-      console.log('');
-      return {
-        rollCounter: st.rollCounter + 1,
-        dies: newDies,
+    this.setState(
+      ({
         scores: {
-          one: upperScore.one(newDies),
-          two: upperScore.two(newDies),
-          three: upperScore.three(newDies),
-          four: upperScore.four(newDies),
-          five: upperScore.five(newDies),
-          six: upperScore.six(newDies),
-          onepair: onePair.isPair(newDies),
-          twopair: twoPair.isPair(newDies),
-          threeofakind: threeOfAKind.isKind(newDies),
-          fourofakind: fourOfAKind.isKind(newDies),
-          fullhouse: fullHouse.isFullHouse(),
-          smallstraight: smallStraight.isStraight(newDies),
-          longstraight: longStraight.isStraight(newDies),
-          chance: chance.isChance(),
-          yatzy: yatzy.isYatzy(),
+          one,
+          two,
+          three,
+          four,
+          five,
+          six,
+          onepair,
+          twopair,
+          threeofakind,
+          fourofakind,
+          fullhouse,
+          smallstraight,
+          longstraight,
+          chance,
+          yatzy,
         },
-      };
-    });
+      }) => {
+        // whenever a score clicked it and it's type
+        // should not change till user press restart
+
+        // for first roll this setState should invoked
+
+        // for next rolls this setState or another setState should invoke if the
+        // score property does not have used prop
+
+        console.log('object');
+        return {
+          scores: {
+            one: one && one.used ? one : new UpperScore(dies).one(),
+            two: two && two.used ? two : new UpperScore(dies).two(),
+            three: three && three.used ? three : new UpperScore(dies).three(),
+            four: four && four.used ? four : new UpperScore(dies).four(),
+            five: five && five.used ? five : new UpperScore(dies).five(),
+            six: six && six.used ? six : new UpperScore(dies).six(),
+            onepair: onepair && onepair.used ? onepair : new OnePair(dies).isPair(),
+            twopair: twopair && twopair.used ? twopair : new TwoPair(dies).isPair(),
+            threeofakind:
+              threeofakind && threeofakind.used ? threeofakind : new ThreeOfAKind(dies).isKind(),
+            fourofakind:
+              fourofakind && fourofakind.used ? fourofakind : new FourOfAKind(dies).isKind(),
+            fullhouse: fullhouse && fullhouse.used ? fullhouse : new FullHouse(dies).isFullHouse(),
+            smallstraight:
+              smallstraight && smallstraight.used
+                ? smallstraight
+                : new SmallStraight(dies).isStraight(),
+            longstraight:
+              longstraight && longstraight.user
+                ? longstraight
+                : new LongStraight(dies).isStraight(),
+            chance: chance && chance.used ? chance : new Chance(dies).isChance(),
+            yatzy: yatzy && yatzy.used ? yatzy : new Yatzy(dies).isYatzy(),
+          },
+        };
+      },
+    );
   }
 
   lock(id) {
