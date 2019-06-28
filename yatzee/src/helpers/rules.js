@@ -22,7 +22,7 @@ class Rule {
   }
 
   sum(dice) {
-    return dice && dice.length >= 1 ? dice.reduce((prev, curr) => prev + curr) : dice;
+    return dice && dice.length >= 1 ? dice.reduce((prev, curr) => prev + curr) : 0;
   }
 
   isSame() {
@@ -65,13 +65,13 @@ class OnePair extends Rule {
         case 2:
           return this.sum([setSameDice[1], setSameDice[1]]);
         default:
-          return undefined;
+          return 0;
       }
     };
   }
 
   isPair() {
-    return this.setSameDice.length >= 1 && { type: ONE_PAIR, score: this.scoreCalculator() };
+    return { type: ONE_PAIR, score: this.scoreCalculator() };
   }
 }
 
@@ -92,13 +92,12 @@ class TwoPair extends Rule {
         sameDice.pop();
         return this.sum(sameDice);
       }
-      return undefined;
+      return 0;
     };
   }
 
   isPair() {
-    if (this.sameDice.length >= 4) return { type: TWO_PAIR, score: this.scoreCalculator() };
-    return undefined;
+    return { type: TWO_PAIR, score: this.scoreCalculator() };
   }
 }
 
@@ -131,7 +130,7 @@ class ThreeOfAKind extends Rule {
 
   isKind() {
     if (this.sameDice.length >= 3 && this.isRealKind()) return { type: THREE_OF_A_KIND, score: this.scoreCalculator() };
-    return undefined;
+    return { type: THREE_OF_A_KIND, score: 0 };
   }
 }
 class FourOfAKind extends Rule {
@@ -154,7 +153,7 @@ class FourOfAKind extends Rule {
     const sameDice = this.isSame();
 
     if (sameDice.length >= 4 && this.setSameDice.length === 1) return { type: FOUR_OF_A_KIND, score: this.scoreCalculator() };
-    return undefined;
+    return { type: FOUR_OF_A_KIND, score: 0 };
   }
 }
 
@@ -163,7 +162,7 @@ class FullHouse extends Rule {
     const sameDice = this.isSame();
 
     if (sameDice.length === 5) return { type: FULL_HOUSE, score: this.sum(sameDice) };
-    return undefined;
+    return { type: FULL_HOUSE, score: 0 };
   }
 }
 
@@ -172,7 +171,7 @@ class SmallStraight extends Rule {
     const { dice } = this;
 
     if (this.increasingStraight(dice).smallStraightBool.length === 4) return { type: SMALL_STRAIGHT, score: 15 };
-    return undefined;
+    return { type: SMALL_STRAIGHT, score: 0 };
   }
 }
 class LongStraight extends Rule {
@@ -180,7 +179,7 @@ class LongStraight extends Rule {
     const { dice } = this;
 
     if (this.increasingStraight(dice).longStraightBool.length === 4) return { type: LONG_STRAIGHT, score: 20 };
-    return undefined;
+    return { type: LONG_STRAIGHT, score: 0 };
   }
 }
 
@@ -195,7 +194,7 @@ class Yatzy extends Rule {
     const sameDice = this.isSame();
 
     if (sameDice.length === 5 && [...new Set(sameDice)].length === 1) return { type: YATZY, score: 50 };
-    return undefined;
+    return { type: YATZY, score: 0 };
   }
 }
 

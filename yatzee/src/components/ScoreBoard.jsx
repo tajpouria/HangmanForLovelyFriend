@@ -8,7 +8,7 @@ export default function ScoreBoard({
   return (
     <div className="ScoreBoard">
       <div className="ScoreBoard-scores">
-        <h1>UpperScores</h1>
+        <h1>Upper</h1>
         {upperScores.map(({ type }) => (
           <Score setScore={setScore} scores={scores} key={type} shouldRoll={shouldRoll}>
             {type}
@@ -16,7 +16,7 @@ export default function ScoreBoard({
         ))}
       </div>
       <div className="ScoreBoard-scores">
-        <h1>LowerScores</h1>
+        <h1>Lower</h1>
         {lowerScores.map(({ type }) => (
           <Score setScore={setScore} scores={scores} key={type} shouldRoll={shouldRoll}>
             {type}
