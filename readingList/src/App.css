@@ -11,10 +11,51 @@ body {
 }
 
 .Navbar-header {
-  margin: 10px 0;
+  margin: 15px 0;
   color: #fff;
 }
 
 .Navbar-counter {
   color: #fff;
+}
+
+.BookList-item {
+  font-size: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  background-color: #6d3d6d;
+  padding: 20px;
+  margin: 10px;
+}
+
+.BookList :hover {
+  text-decoration: line-through;
+  color: rgb(139, 129, 129);
+  cursor: pointer;
+}
+
+.NewBookForm {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.NewBookForm div {
+  display: flex;
+  margin-bottom: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.NewBookForm input {
+  border-radius: 15px;
+  margin-left: 10px;
+  padding: 10px;
+  width: 200px;
+  font-weight: bold;
+}
+.NewBookForm button {
+  border-radius: 20px;
+  padding: 10px;
+  font-weight: bold;
 }
