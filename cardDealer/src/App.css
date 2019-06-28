@@ -1,0 +1,41 @@
+* {
+  background-color: rgb(29, 3, 3);
+  color: white;
+}
+
+.Deck {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Deck-title {
+  font-family: 'Rubik Mono One', sans-serif;
+  font-size: 50px;
+}
+
+.Deck-subtitle {
+  font-family: 'Rubik Mono One', sans-serif;
+  font-size: 20px;
+  font-weight: 100;
+}
+
+.Deck button {
+  font-family: 'Rubik Mono One', sans-serif;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 4px;
+  transition: 0.25s;
+}
+
+.Deck div :hover {
+  color: black;
+  box-shadow: inset 0 0 0 2em aqua;
+  cursor: pointer;
+}
+
+.Card {
+  position: absolute;
+  top: 300px;
+}
