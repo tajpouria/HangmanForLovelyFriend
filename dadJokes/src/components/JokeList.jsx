@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import uuid from 'uuid/v4';
 import axios from 'axios';
 
 export default class JokeList extends Component {
@@ -15,17 +14,28 @@ export default class JokeList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      jokes: [],
+      jokes: JSON.parse(window.localStorage.getItem('jokes') || '[]'),
     };
+
+    this.getData = this.getData.bind(this);
   }
 
   async componentDidMount() {
-    const { joke } = await axios.get('https://icanhazdadjoke.com/', {
+    const { jokes } = this.state;
+    const { numberOfJokes } = this.props;
+
+    while (jokes.length < numberOfJokes) {
+      this.getData();
+    }
+  }
+
+  async getData() {
+    const { data } = await axios.get('https://icanhazdadjoke.com/', {
       headers: {
-        Access: 'application/json',
+        Accept: 'application/json',
       },
     });
-    // this.setState(st => ({ jokes: [...st.jokes, jokes] }));
+    this.setState(st => ({ jokes: [...st.jokes, data] }));
   }
 
   render() {
