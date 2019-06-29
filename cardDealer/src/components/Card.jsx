@@ -9,7 +9,7 @@ export default class Card extends Component {
 
   constructor() {
     super();
-    //     transform: translate(5px, 10px) rotate(45deg)
+    // transform: translate(5px, 10px) rotate(45deg)
     const xPos = Math.random() * 40 - 10;
     const yPos = Math.random() * 40 - 10;
     const deg = Math.random() * 90 - 45;
