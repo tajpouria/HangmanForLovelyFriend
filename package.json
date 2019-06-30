@@ -5,7 +5,7 @@
   "author": "tajpouria",
   "license": "MIT",
   "scripts": {
-    "start": "cd dadJokes && webpack-dev-server --node development --open --hot",
+    "start": "cd rismunTodo && webpack-dev-server --node development --open --hot",
     "build": "cd contextReadingList && webpack --mode production"
   },
   "dependencies": {
@@ -14,8 +14,12 @@
     "matter-js": "^0.14.2",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
+    "react-dnd": "^8.0.3",
+    "react-dnd-html5-backend": "^8.0.3",
     "react-dom": "^16.8.6",
+    "react-list-drag-and-drop": "^0.9.1",
     "react-redux": "^7.0.3",
+    "react-trello": "^2.1.4",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "uuid": "^3.3.2"

@@ -86,6 +86,14 @@ export default function note() {
 //     </AuthContext.Consumer>
 // }
 
+//3. useContext hooks
+import React, { useContext } from 'react'
+
+import ThemeContext from './ThemeContext'
+
+const {toggleTheme} = useContext(ThemContext)
+
+
 // ## Modern React Course
 
 '!'.repeat(4)
