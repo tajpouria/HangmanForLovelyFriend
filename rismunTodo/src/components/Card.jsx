@@ -1,6 +1,5 @@
 import React from 'react';
 import { DragSource, DropTarget } from 'react-dnd';
-import cn from 'classnames';
 import _ from 'lodash';
 
 export function Card(props) {
@@ -9,10 +8,13 @@ export function Card(props) {
     props.connectDropTarget,
   )(
     <div
-      className={cn('Card', {
-        'Card--dragging': props.isDragging,
-        'Card--spacer': props.isSpacer,
-      })}
+      className={
+        ('Card',
+        {
+          'Card--dragging': props.isDragging,
+          'Card--spacer': props.isSpacer,
+        })
+      }
     >
       <div className="Card__title">{props.title}</div>
     </div>,

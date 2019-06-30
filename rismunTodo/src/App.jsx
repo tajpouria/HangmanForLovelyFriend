@@ -12,7 +12,7 @@ const initialCards = Array.from({ length: 9 }).map(() => ({
   title: `Card ${CA_ID}`,
 }));
 
-const initialColumns = ['TODO', 'In Progress yet..', 'Done'].map((title, i) => ({
+const initialColumns = ['TODO', 'Doing...', 'Done!'].map((title, i) => ({
   id: CO_ID++,
   title,
   cardIds: initialCards.slice(i * 3, i * 3 + 3).map(card => card.id),
