@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
@@ -9,10 +9,15 @@ import MenuList from '@material-ui/core/MenuList';
 import uuid from 'uuid/v4';
 import PropTypes from 'prop-types';
 
+const TOP_INVENTOR = [50, 100, 150, 200, 250, 300, 350];
+
 export default function DropDown({ children, menuItems }) {
   const [open, setOpen] = useState(false);
   const [subTitles, setSubTitles] = useState([]);
   const [subTitleAdded, setSubTitleAdded] = useState(0);
+  const [topNestedSubTitles, setTopNestedSubTitles] = useState(0);
+  const [topDoubleNestedSubTitles, setTopDoubleNestedSubTitles] = useState(0);
+  const anchorRef = useRef(null);
 
   function handleToggle() {
     setOpen(prevOpen => !prevOpen);
@@ -21,13 +26,17 @@ export default function DropDown({ children, menuItems }) {
   function handleClose(event) {
     event.preventDefault();
 
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
     setOpen(false);
     setSubTitles([]);
     setSubTitleAdded(0);
   }
 
   function nestedChildrenHoverHandler(subTitle) {
-    return subTitle.map(item => (
+    return subTitle.map((item, i) => (
       <MenuItem
         onFocus={() => null}
         onMouseOver={
@@ -36,95 +45,94 @@ export default function DropDown({ children, menuItems }) {
               if (subTitleAdded <= 1) {
                 setSubTitles([...subTitles, item.children]);
                 setSubTitleAdded(2);
+                setTopDoubleNestedSubTitles(topNestedSubTitles + i);
               }
             }
-            : null
+            : () => null
         }
         onMouseLeave={
           item.children
             ? () => {
-              setTimeout(() => {
-                const newSubTitles = subTitles.pop();
-                setSubTitleAdded(newSubTitles);
-              }, 500);
-              setSubTitleAdded(0);
+              const newSubTitles = subTitles.pop();
+              setSubTitleAdded(newSubTitles);
+              setSubTitleAdded(1);
             }
-            : null
+            : () => null
         }
         className="DropDown-MenuItems"
         key={uuid()}
       >
         {item.actionTitle}
-        <span>{item.children ? ' ▶' : null}</span>
+        <span>{item.children ? ' ▶' : ''}</span>
       </MenuItem>
     ));
   }
+
   return (
     <div className="DropDown">
-      <div>
-        <Button onClick={handleToggle}>{children}</Button>
-        <Popper open={open} keepMounted transition disablePortal>
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <MenuList>
-                    {menuItems.map(item => (
-                      <MenuItem
-                        onFocus={() => null}
-                        onMouseOver={
-                          item.children
-                            ? () => {
-                              if (subTitleAdded <= 0) {
-                                setSubTitles([...subTitles, item.children]);
-                                setSubTitleAdded(1);
-                              }
+      <Button onClick={handleToggle}>{children}</Button>
+      <Popper anchorEl={anchorRef.current} open={open} keepMounted transition disablePortal>
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={handleClose}>
+                <MenuList>
+                  {menuItems.map((item, i) => (
+                    <MenuItem
+                      onFocus={() => null}
+                      onMouseOver={
+                        item.children
+                          ? () => {
+                            if (subTitleAdded <= 0) {
+                              setSubTitles([...subTitles, item.children]);
+                              setSubTitleAdded(1);
+                              setTopNestedSubTitles(i);
                             }
-                            : () => console.log('not delete')
-                        }
-                        onMouseLeave={
-                          item.children
-                            ? () => {
-                              setTimeout(() => {
-                                const newSubTitles = subTitles.pop();
-                                setSubTitleAdded(newSubTitles);
-                              }, 500);
-                              setSubTitleAdded(0);
-                            }
-                            : null
-                        }
-                        className="DropDown-MenuItems"
-                        key={uuid()}
-                      >
-                        {item.actionTitle}
-                        <span>{item.children ? ' ▶' : null}</span>
-                      </MenuItem>
-                    ))}
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-        {subTitles.map((subTitle, i) => (
-          <ClickAwayListener key={uuid()} onClickAway={handleClose}>
-            <MenuList
-              style={{
-                position: 'absolute',
-                top: (i + 1) * 150,
-                left: (i + 1) * 150,
-                boxShadow: '2px 2px 2px lightGrey',
-                borderRadius: 4,
-              }}
-            >
-              {nestedChildrenHoverHandler(subTitle, i)}
-            </MenuList>
-          </ClickAwayListener>
-        ))}
-      </div>
+                          }
+                          : () => {}
+                      }
+                      onMouseLeave={
+                        item.children
+                          ? () => {
+                            const newSubTitles = subTitles.pop();
+                            setSubTitleAdded(newSubTitles);
+                            setSubTitleAdded(0);
+                          }
+                          : null
+                      }
+                      className="DropDown-MenuItems"
+                      key={uuid()}
+                    >
+                      {item.actionTitle}
+                      <span>{item.children ? ' ▶' : null}</span>
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+      {subTitles.map((subTitle, i) => (
+        <ClickAwayListener key={uuid()} onClickAway={handleClose}>
+          <MenuList
+            style={{
+              position: 'absolute',
+              left: (i + 1) * 150,
+              top:
+                i === 0 ? TOP_INVENTOR[topNestedSubTitles] : TOP_INVENTOR[topDoubleNestedSubTitles],
+              boxShadow: '2px 2px 2px lightGrey',
+              borderRadius: 4,
+              marginLeft: -30,
+            }}
+          >
+            {nestedChildrenHoverHandler(subTitle, i)}
+          </MenuList>
+        </ClickAwayListener>
+      ))}
     </div>
   );
 }
