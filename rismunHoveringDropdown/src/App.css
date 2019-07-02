@@ -1,8 +1,22 @@
+body {
+  background-color: rgb(48, 36, 36);
+}
 .DropDownContainer {
   display: flex;
+}
+
+.RTL {
+  flex-direction: row-reverse;
 }
 
 .DropDown-MenuItems span {
   display: flex;
   margin-left: 20px;
+}
+.DropDown-MenuItems {
+  background-color: black;
+}
+
+.DropDownContainer {
+  background-color: rgb(110, 153, 190);
 }

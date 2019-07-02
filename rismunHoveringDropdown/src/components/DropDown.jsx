@@ -9,12 +9,13 @@ import MenuList from '@material-ui/core/MenuList';
 import uuid from 'uuid/v4';
 import PropTypes from 'prop-types';
 
-const TOP_INVENTOR = [55, 102, 150, 200, 250, 275, 310, 300, 370];
+const TOP_INVENTOR = [55, 102, 150, 200, 250, 290, 390, 390, 390, 410, 460];
 
 export default function DropDown({ children, menuItems }) {
   const [open, setOpen] = useState(false);
   const [subTitles, setSubTitles] = useState([]);
   const [subTitleAdded, setSubTitleAdded] = useState(0);
+  const [subTitleNestedAdded, setSubTitleNestedAdded] = useState(1);
   const [topNestedSubTitles, setTopNestedSubTitles] = useState(0);
   const [topDoubleNestedSubTitles, setTopDoubleNestedSubTitles] = useState(0);
   const [onHoverItem, setOnHoverItem] = useState([]);
@@ -23,8 +24,6 @@ export default function DropDown({ children, menuItems }) {
   function handleToggle() {
     setOpen(prevOpen => !prevOpen);
   }
-
-  console.log(onHoverItem);
 
   function handleClose(event) {
     event.preventDefault();
@@ -36,11 +35,15 @@ export default function DropDown({ children, menuItems }) {
     setOpen(false);
     setSubTitles([]);
     setSubTitleAdded(0);
+    setSubTitleNestedAdded(1);
+    setOnHoverItem([]);
   }
 
-  function nestedChildrenHoverHandler(subTitle) {
+  function nestedChildrenHoverHandler(subTitle, nested) {
+    if (!subTitle.length) subTitle = [subTitle];
     return subTitle.map((item, i) => (
       <MenuItem
+        className="DropDown-MenuItems"
         style={{
           backgroundColor: onHoverItem.indexOf(item.actionTitle) !== -1 ? 'lightGrey' : 'white',
         }}
@@ -48,28 +51,43 @@ export default function DropDown({ children, menuItems }) {
         onMouseOver={
           item.children
             ? () => {
-              if (subTitleAdded <= 1) {
-                setSubTitles([...subTitles, item.children]);
+              if (subTitleAdded <= 1 && subTitleNestedAdded < 2) {
+                if (subTitles.length < 2) setSubTitles([...subTitles, item.children]);
                 setSubTitleAdded(2);
+                setSubTitleNestedAdded(2);
                 setTopDoubleNestedSubTitles(topNestedSubTitles + i);
                 setOnHoverItem([...new Set([...onHoverItem, item.actionTitle])]);
               }
             }
-            : () => null
+            : () => {
+              if (subTitleAdded <= 1 || nested === 1) {
+                if (subTitleNestedAdded < 2) {
+                  setOnHoverItem([...new Set([...onHoverItem, item.actionTitle])]);
+                  setSubTitleAdded(2);
+                  setSubTitleNestedAdded(2);
+                }
+              }
+            }
         }
         onMouseLeave={
           item.children
             ? () => {
               const newSubTitles = subTitles.pop();
-              setSubTitleAdded(newSubTitles);
+              if (subTitleNestedAdded === 1) setSubTitles(newSubTitles);
               setSubTitleAdded(1);
+              setSubTitleNestedAdded(1);
               const newOnHoverItems = onHoverItem.filter(it => it !== item.actionTitle);
               setOnHoverItem(newOnHoverItems);
             }
-            : () => null
+            : () => {
+              setSubTitleAdded(1);
+              setSubTitleNestedAdded(1);
+              const newOnHoverItems = onHoverItem.filter(it => it !== item.actionTitle);
+              setOnHoverItem(newOnHoverItems);
+            }
         }
-        className="DropDown-MenuItems"
         key={uuid()}
+        onClick={handleClose}
       >
         {item.actionTitle}
         <span>{item.children ? ' ▶' : ''}</span>
@@ -98,6 +116,7 @@ export default function DropDown({ children, menuItems }) {
                 >
                   {menuItems.map((item, i) => (
                     <MenuItem
+                      className="DropDown-MenuItems"
                       style={{
                         backgroundColor:
                           onHoverItem.indexOf(item.actionTitle) !== -1 ? 'lightGrey' : 'white',
@@ -113,7 +132,12 @@ export default function DropDown({ children, menuItems }) {
                               setOnHoverItem([...new Set([...onHoverItem, item.actionTitle])]);
                             }
                           }
-                          : () => {}
+                          : () => {
+                            if (subTitleAdded <= 0) {
+                              setSubTitleAdded(1);
+                              setOnHoverItem([...new Set([...onHoverItem, item.actionTitle])]);
+                            }
+                          }
                       }
                       onMouseLeave={
                         item.children
@@ -126,10 +150,16 @@ export default function DropDown({ children, menuItems }) {
                             );
                             setOnHoverItem(newOnHoverItems);
                           }
-                          : null
+                          : () => {
+                            setSubTitleAdded(0);
+                            const newOnHoverItems = onHoverItem.filter(
+                              it => it !== item.actionTitle,
+                            );
+                            setOnHoverItem(newOnHoverItems);
+                          }
                       }
-                      className="DropDown-MenuItems"
                       key={uuid()}
+                      onClick={handleClose}
                     >
                       {item.actionTitle}
                       <span>{item.children ? ' ▶' : null}</span>
@@ -145,13 +175,12 @@ export default function DropDown({ children, menuItems }) {
         <ClickAwayListener key={uuid()} onClickAway={handleClose}>
           <MenuList
             style={{
-              position: 'absolute',
               left: (i + 1) * 150,
               top:
                 i === 0 ? TOP_INVENTOR[topNestedSubTitles] : TOP_INVENTOR[topDoubleNestedSubTitles],
               boxShadow: '2px 2px 2px lightGrey',
               borderRadius: 4,
-              marginLeft: -40,
+              marginLeft: i !== 2 && -40,
               padding: i === 0 ? 20 : 30,
             }}
           >

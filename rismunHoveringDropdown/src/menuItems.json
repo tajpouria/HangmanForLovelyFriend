@@ -9,14 +9,30 @@
         }
       ]
     },
-    { "actionTitle": "New Window" },
+    {
+      "actionTitle": "New Window",
+      "children": [
+        { "actionTitle": "Command Palette" },
+        { "actionTitle": "Open Recent" },
+        { "actionTitle": "Save" },
+        {
+          "actionTitle": "Reopen closed editor"
+        }
+      ]
+    },
     { "actionTitle": "Open File..." },
     { "actionTitle": "Open Folder" },
     {
       "actionTitle": "Preference",
       "children": [
         { "actionTitle": "Setting" },
-        { "actionTitle": "Extensions" }
+        {
+          "actionTitle": "Extensions",
+          "children": [
+            { "actionTitle": "Install" },
+            { "actionTitle": "Uninstall" }
+          ]
+        }
       ]
     }
   ],
