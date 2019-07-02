@@ -1,0 +1,8 @@
+.DropDownContainer {
+  display: flex;
+}
+
+.DropDown-MenuItems span {
+  display: flex;
+  margin-left: 20px;
+}

@@ -11,6 +11,12 @@ const invertDirection = {
 };
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleSort = this.handleSort.bind(this);
+  }
+
   state = {
     data: [
       {
@@ -138,7 +144,7 @@ class App extends Component {
     }));
   };
 
-  handleSort = (columnName) => {
+  handleSort(columnName) {
     const indxOfColumnToSort = this.state.columnToSort.indexOf(columnName);
 
     const _indexForSort = indxOfColumnToSort;
@@ -155,10 +161,15 @@ class App extends Component {
         sortDirection: newSortDirection,
       };
     });
-  };
+  }
 
   render() {
-    console.log(this.state.columnToSort, this.state.sortDirection);
+    const {
+      data, editIdx, columnToSort, sortDirection,
+    } = this.state;
+
+    console.log(columnToSort, sortDirection);
+
     return (
       <MuiThemeProvider>
         <div className="App">
@@ -166,12 +177,12 @@ class App extends Component {
             handleSort={this.handleSort}
             handleRemove={this.handleRemove}
             startEditing={this.startEditing}
-            editIdx={this.state.editIdx}
+            editIdx={editIdx}
             stopEditing={this.stopEditing}
             handleChange={this.handleChange}
-            columnToSort={this.state.columnToSort}
-            sortDirection={this.state.sortDirection}
-            data={orderBy(this.state.data, this.state.columnToSort, this.state.sortDirection)}
+            columnToSort={columnToSort}
+            sortDirection={sortDirection}
+            data={orderBy(data, columnToSort, sortDirection)}
             header={[
               {
                 name: 'First name',

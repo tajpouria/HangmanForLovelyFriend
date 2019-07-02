@@ -1,0 +1,36 @@
+{
+  "file": [
+    { "actionTitle": "New File" },
+    { "actionTitle": "New Window" },
+    { "actionTitle": "Open File..." },
+    { "actionTitle": "Open Folder" },
+    {
+      "actionTitle": "Preference",
+      "children": [
+        { "actionTitle": "Setting" },
+        { "actionTitle": "Extensions" },
+        { "actionTitle": "Setting" },
+        { "actionTitle": "Extensions" },
+        {
+          "actionTitle": "Extensions",
+          "children": [
+            { "actionTitle": "Add Folder" },
+            {
+              "actionTitle": "WorkSpace",
+              "children": [
+                { "actionTitle": "Install" },
+                { "actionTitle": "Uninstall" }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "edit": [
+    { "actionTitle": "New File" },
+    { "actionTitle": "New Window" },
+    { "actionTitle": "Open File..." },
+    { "actionTitle": "Open Folder" }
+  ]
+}
