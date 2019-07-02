@@ -16,22 +16,9 @@
       "actionTitle": "Preference",
       "children": [
         { "actionTitle": "Setting" },
-        {
-          "actionTitle": "Extensions",
-          "children": [
-            { "actionTitle": "Add Folder" },
-            {
-              "actionTitle": "WorkSpace"
-            }
-          ]
-        }
+        { "actionTitle": "Extensions" }
       ]
     }
   ],
-  "edit": [
-    { "actionTitle": "New File" },
-    { "actionTitle": "New Window" },
-    { "actionTitle": "Open File..." },
-    { "actionTitle": "Open Folder" }
-  ]
+  "edit": [{ "actionTitle": "Open File..." }, { "actionTitle": "Open Folder" }]
 }

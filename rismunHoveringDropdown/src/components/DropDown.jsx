@@ -9,7 +9,7 @@ import MenuList from '@material-ui/core/MenuList';
 import uuid from 'uuid/v4';
 import PropTypes from 'prop-types';
 
-const TOP_INVENTOR = [50, 100, 150, 200, 250, 300, 350];
+const TOP_INVENTOR = [55, 102, 150, 200, 250, 275, 310, 300, 370];
 
 export default function DropDown({ children, menuItems }) {
   const [open, setOpen] = useState(false);
@@ -17,11 +17,14 @@ export default function DropDown({ children, menuItems }) {
   const [subTitleAdded, setSubTitleAdded] = useState(0);
   const [topNestedSubTitles, setTopNestedSubTitles] = useState(0);
   const [topDoubleNestedSubTitles, setTopDoubleNestedSubTitles] = useState(0);
+  const [onHoverItem, setOnHoverItem] = useState([]);
   const anchorRef = useRef(null);
 
   function handleToggle() {
     setOpen(prevOpen => !prevOpen);
   }
+
+  console.log(onHoverItem);
 
   function handleClose(event) {
     event.preventDefault();
@@ -38,6 +41,9 @@ export default function DropDown({ children, menuItems }) {
   function nestedChildrenHoverHandler(subTitle) {
     return subTitle.map((item, i) => (
       <MenuItem
+        style={{
+          backgroundColor: onHoverItem.indexOf(item.actionTitle) !== -1 ? 'lightGrey' : 'white',
+        }}
         onFocus={() => null}
         onMouseOver={
           item.children
@@ -46,6 +52,7 @@ export default function DropDown({ children, menuItems }) {
                 setSubTitles([...subTitles, item.children]);
                 setSubTitleAdded(2);
                 setTopDoubleNestedSubTitles(topNestedSubTitles + i);
+                setOnHoverItem([...new Set([...onHoverItem, item.actionTitle])]);
               }
             }
             : () => null
@@ -56,6 +63,8 @@ export default function DropDown({ children, menuItems }) {
               const newSubTitles = subTitles.pop();
               setSubTitleAdded(newSubTitles);
               setSubTitleAdded(1);
+              const newOnHoverItems = onHoverItem.filter(it => it !== item.actionTitle);
+              setOnHoverItem(newOnHoverItems);
             }
             : () => null
         }
@@ -79,9 +88,20 @@ export default function DropDown({ children, menuItems }) {
           >
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList>
+                <MenuList
+                  style={{
+                    position: 'absolute',
+                    borderRadius: 4,
+                    marginLeft: -30,
+                    padding: 30,
+                  }}
+                >
                   {menuItems.map((item, i) => (
                     <MenuItem
+                      style={{
+                        backgroundColor:
+                          onHoverItem.indexOf(item.actionTitle) !== -1 ? 'lightGrey' : 'white',
+                      }}
                       onFocus={() => null}
                       onMouseOver={
                         item.children
@@ -90,6 +110,7 @@ export default function DropDown({ children, menuItems }) {
                               setSubTitles([...subTitles, item.children]);
                               setSubTitleAdded(1);
                               setTopNestedSubTitles(i);
+                              setOnHoverItem([...new Set([...onHoverItem, item.actionTitle])]);
                             }
                           }
                           : () => {}
@@ -100,6 +121,10 @@ export default function DropDown({ children, menuItems }) {
                             const newSubTitles = subTitles.pop();
                             setSubTitleAdded(newSubTitles);
                             setSubTitleAdded(0);
+                            const newOnHoverItems = onHoverItem.filter(
+                              it => it !== item.actionTitle,
+                            );
+                            setOnHoverItem(newOnHoverItems);
                           }
                           : null
                       }
@@ -126,7 +151,8 @@ export default function DropDown({ children, menuItems }) {
                 i === 0 ? TOP_INVENTOR[topNestedSubTitles] : TOP_INVENTOR[topDoubleNestedSubTitles],
               boxShadow: '2px 2px 2px lightGrey',
               borderRadius: 4,
-              marginLeft: -30,
+              marginLeft: -40,
+              padding: i === 0 ? 20 : 30,
             }}
           >
             {nestedChildrenHoverHandler(subTitle, i)}
