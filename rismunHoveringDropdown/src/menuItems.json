@@ -1,40 +1,49 @@
 {
-  "file": [
+  "data": [
     {
-      "actionTitle": "New File",
-      "children": [
-        { "actionTitle": "Add Folder" },
+      "file": [
         {
-          "actionTitle": "WorkSpace"
-        }
-      ]
-    },
-    {
-      "actionTitle": "New Window",
-      "children": [
-        { "actionTitle": "Command Palette" },
-        { "actionTitle": "Open Recent" },
-        { "actionTitle": "Save" },
-        {
-          "actionTitle": "Reopen closed editor"
-        }
-      ]
-    },
-    { "actionTitle": "Open File..." },
-    { "actionTitle": "Open Folder" },
-    {
-      "actionTitle": "Preference",
-      "children": [
-        { "actionTitle": "Setting" },
-        {
-          "actionTitle": "Extensions",
+          "actionTitle": "New File",
           "children": [
-            { "actionTitle": "Install" },
-            { "actionTitle": "Uninstall" }
+            { "actionTitle": "Add Folder" },
+            {
+              "actionTitle": "WorkSpace"
+            }
+          ]
+        },
+        {
+          "actionTitle": "New Window",
+          "children": [
+            { "actionTitle": "Command Palette" },
+            { "actionTitle": "Open Recent" },
+            { "actionTitle": "Save" },
+            {
+              "actionTitle": "Reopen closed editor"
+            }
+          ]
+        },
+        { "actionTitle": "Open File..." },
+        { "actionTitle": "Open Folder" },
+        {
+          "actionTitle": "Preference",
+          "children": [
+            { "actionTitle": "Setting" },
+            {
+              "actionTitle": "Extensions",
+              "children": [
+                { "actionTitle": "Install" },
+                { "actionTitle": "Uninstall" }
+              ]
+            }
           ]
         }
       ]
+    },
+    {
+      "edit": [
+        { "actionTitle": "Open File..." },
+        { "actionTitle": "Open Folder" }
+      ]
     }
-  ],
-  "edit": [{ "actionTitle": "Open File..." }, { "actionTitle": "Open Folder" }]
+  ]
 }

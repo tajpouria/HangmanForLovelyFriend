@@ -1,15 +1,22 @@
-import React, { useState, useRef } from 'react';
+/* eslint-disable import/no-cycle */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+import React, {
+  useState, useRef, useContext, useEffect,
+} from 'react';
 import Button from '@material-ui/core/Button';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import uuid from 'uuid/v4';
 import PropTypes from 'prop-types';
 
-const TOP_INVENTOR = [55, 102, 150, 200, 250, 290, 390, 390, 390, 410, 460];
+import { DropDownJoinContext } from './DropDownContainer';
+
+const TOP_INVENTOR = [30, 90, 150, 210, 270, 325, 390, 390, 390, 410, 460];
 
 export default function DropDown({ children, menuItems }) {
   const [open, setOpen] = useState(false);
@@ -21,13 +28,9 @@ export default function DropDown({ children, menuItems }) {
   const [onHoverItem, setOnHoverItem] = useState([]);
   const anchorRef = useRef(null);
 
-  function handleToggle() {
-    setOpen(prevOpen => !prevOpen);
-  }
+  const { setSelectedDropDownMenu, activatedDropDown } = useContext(DropDownJoinContext);
 
   function handleClose(event) {
-    event.preventDefault();
-
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -39,10 +42,19 @@ export default function DropDown({ children, menuItems }) {
     setOnHoverItem([]);
   }
 
+  useEffect(() => {
+    if (activatedDropDown !== children.toString()) return handleClose();
+  }, [activatedDropDown]);
+
+  function handleToggle() {
+    setOpen(prevOpen => !prevOpen);
+    setSelectedDropDownMenu(children.toString());
+  }
+
   function nestedChildrenHoverHandler(subTitle, nested) {
     if (!subTitle.length) subTitle = [subTitle];
     return subTitle.map((item, i) => (
-      <MenuItem
+      <li
         className="DropDown-MenuItems"
         style={{
           backgroundColor: onHoverItem.indexOf(item.actionTitle) !== -1 ? 'lightGrey' : 'white',
@@ -51,16 +63,15 @@ export default function DropDown({ children, menuItems }) {
         onMouseOver={
           item.children
             ? () => {
-              if (subTitleAdded <= 1 && subTitleNestedAdded < 2) {
+              if (subTitleAdded <= 1) {
                 if (subTitles.length < 2) setSubTitles([...subTitles, item.children]);
                 setSubTitleAdded(2);
-                setSubTitleNestedAdded(2);
                 setTopDoubleNestedSubTitles(topNestedSubTitles + i);
                 setOnHoverItem([...new Set([...onHoverItem, item.actionTitle])]);
               }
             }
             : () => {
-              if (subTitleAdded <= 1 || nested === 1) {
+              if (subTitleAdded <= 1 || nested === 1 || subTitleNestedAdded <= 1) {
                 if (subTitleNestedAdded < 2) {
                   setOnHoverItem([...new Set([...onHoverItem, item.actionTitle])]);
                   setSubTitleAdded(2);
@@ -73,7 +84,7 @@ export default function DropDown({ children, menuItems }) {
           item.children
             ? () => {
               const newSubTitles = subTitles.pop();
-              if (subTitleNestedAdded === 1) setSubTitles(newSubTitles);
+              if (subTitleNestedAdded === 1 && nested > 0) setSubTitles(newSubTitles);
               setSubTitleAdded(1);
               setSubTitleNestedAdded(1);
               const newOnHoverItems = onHoverItem.filter(it => it !== item.actionTitle);
@@ -89,9 +100,9 @@ export default function DropDown({ children, menuItems }) {
         key={uuid()}
         onClick={handleClose}
       >
-        {item.actionTitle}
+        <span>{item.actionTitle}</span>
         <span>{item.children ? ' ▶' : ''}</span>
-      </MenuItem>
+      </li>
     ));
   }
 
@@ -107,15 +118,17 @@ export default function DropDown({ children, menuItems }) {
             <Paper>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList
+                  className="DropDown-MenuList"
                   style={{
                     position: 'absolute',
                     borderRadius: 4,
-                    marginLeft: -30,
-                    padding: 30,
+                    marginTop: -25,
+                    marginLeft: -25,
+                    padding: 20,
                   }}
                 >
                   {menuItems.map((item, i) => (
-                    <MenuItem
+                    <li
                       className="DropDown-MenuItems"
                       style={{
                         backgroundColor:
@@ -163,7 +176,7 @@ export default function DropDown({ children, menuItems }) {
                     >
                       {item.actionTitle}
                       <span>{item.children ? ' ▶' : null}</span>
-                    </MenuItem>
+                    </li>
                   ))}
                 </MenuList>
               </ClickAwayListener>
@@ -174,14 +187,13 @@ export default function DropDown({ children, menuItems }) {
       {subTitles.map((subTitle, i) => (
         <ClickAwayListener key={uuid()} onClickAway={handleClose}>
           <MenuList
+            className="DropDown-MenuList"
             style={{
-              left: (i + 1) * 150,
+              position: 'absolute',
+              left: (i + 1) * 90,
               top:
                 i === 0 ? TOP_INVENTOR[topNestedSubTitles] : TOP_INVENTOR[topDoubleNestedSubTitles],
-              boxShadow: '2px 2px 2px lightGrey',
               borderRadius: 4,
-              marginLeft: i !== 2 && -40,
-              padding: i === 0 ? 20 : 30,
             }}
           >
             {nestedChildrenHoverHandler(subTitle, i)}

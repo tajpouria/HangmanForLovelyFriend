@@ -1,8 +1,14 @@
 body {
   background-color: rgb(48, 36, 36);
+  margin: 0px;
 }
 .DropDownContainer {
   display: flex;
+  justify-content: flex-start;
+}
+
+.DropDownContainer li {
+  padding: 15px;
 }
 
 .RTL {
@@ -14,6 +20,8 @@ body {
   margin-left: 20px;
 }
 .DropDown-MenuItems {
+  display: flex;
+  justify-content: space-around;
   background-color: black;
 }
 
