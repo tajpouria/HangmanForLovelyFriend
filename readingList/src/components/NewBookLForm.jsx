@@ -6,12 +6,12 @@ export default function NewBookForm() {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
 
-  const { addBook } = useContext(BooksContext);
+  const { dispatch } = useContext(BooksContext);
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
 
-    return addBook({ title, author });
+    return dispatch({ type: 'ADD_BOOK', payload: { title, author } });
   };
 
   return (

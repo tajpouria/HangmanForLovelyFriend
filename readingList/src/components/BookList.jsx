@@ -3,12 +3,16 @@ import React, { useContext } from 'react';
 import { BooksContext } from '../context/BooksContext';
 
 export default function BookList() {
-  const { books, removeBook } = useContext(BooksContext);
+  const { books, dispatch } = useContext(BooksContext);
   return (
     <ul className="BookList">
       {books.length ? (
         books.map(({ title, id }) => (
-          <li onClick={() => removeBook(id)} className="BookList-item" key={id}>
+          <li
+            onClick={() => dispatch({ type: 'REMOVE_BOOK', payload: { id } })}
+            className="BookList-item"
+            key={id}
+          >
             {title}
           </li>
         ))

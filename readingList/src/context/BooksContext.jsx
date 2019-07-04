@@ -1,23 +1,23 @@
-import React, { createContext, useState } from 'react';
-import uuid from 'uuid/v4';
+import React, { createContext, useReducer, useEffect } from 'react';
 import PropTypes from 'prop-types';
+
+import bookReducer from '../reducers/bookReducer';
 
 export const BooksContext = createContext();
 
 export default function BooksContextProvider({ children }) {
-  const [books, setBooks] = useState([
-    { title: 'Papa Hemingway ', author: 'ERNEST HEMINGWAY', id: uuid() },
-    { title: "Joseph Conrad's Victory", author: 'JOAN DIDION', id: uuid() },
-  ]);
+  const [books, dispatch] = useReducer(bookReducer, [], () => {
+    const storedBooks = JSON.parse(localStorage.getItem('books'));
 
-  const addBook = ({ title, author }) => setBooks([...books, { title, author, id: uuid() }]);
-  const removeBook = bookId => setBooks(books.filter(({ id }) => id !== bookId));
+    return storedBooks || [];
+  });
+  useEffect(() => {
+    localStorage.setItem('books', JSON.stringify(books));
+  }, [books]);
 
-  return (
-    <BooksContext.Provider value={{ books, addBook, removeBook }}>{children}</BooksContext.Provider>
-  );
+  return <BooksContext.Provider value={{ books, dispatch }}>{children}</BooksContext.Provider>;
 }
 
 BooksContextProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.array.isRequired,
 };
